@@ -30,7 +30,7 @@ export function SectionHead({
 }) {
   return (
     <div className={`flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-10 ${className}`}>
-      <div className={`flex flex-col items-start gap-5 lg:gap-[22px] ${titleWidth}`}>
+      <div data-reveal className={`flex flex-col items-start gap-5 lg:gap-[22px] ${titleWidth}`}>
         <EyebrowR tone={tone}>{eyebrow}</EyebrowR>
         <h2 className={`t-h2 ${tone === "dark" ? "text-white" : "text-ink"}`}>{title}</h2>
         {lead && <p className="t-body-l text-ink lg:font-normal">{lead}</p>}

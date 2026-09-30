@@ -23,13 +23,14 @@ export function VisionMission({ locale }: { locale: Locale }) {
         />
         <div className="grid gap-5 lg:grid-cols-2 lg:gap-6">
           <Card
+            index={0}
             featured
             icon="target"
             title={t(c.vision.title, locale)}
             tag={c.vision.tag}
             body={t(c.vision.body, locale)}
           />
-          <Card icon="check" title={t(c.mission.title, locale)} tag={c.mission.tag} body={t(c.mission.body, locale)} />
+          <Card index={1} icon="check" title={t(c.mission.title, locale)} tag={c.mission.tag} body={t(c.mission.body, locale)} />
         </div>
       </div>
     </section>
@@ -37,12 +38,15 @@ export function VisionMission({ locale }: { locale: Locale }) {
 }
 
 function Card({
+  index,
   featured,
   icon,
   title,
   tag,
   body,
 }: {
+  /** Reveal stagger step. */
+  index: number;
   featured?: boolean;
   icon: IconName;
   title: string;
@@ -51,6 +55,8 @@ function Card({
 }) {
   return (
     <article
+      data-reveal
+      style={{ "--i": index } as React.CSSProperties}
       className={`flex flex-col gap-[14px] rounded-[24px] p-6 lg:gap-[26px] lg:rounded-[32px] lg:p-12 ${
         featured ? "bg-purple text-white" : "bg-white text-ink"
       }`}

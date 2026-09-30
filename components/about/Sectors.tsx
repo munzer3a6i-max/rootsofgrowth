@@ -12,8 +12,8 @@ export function Sectors({ locale }: { locale: Locale }) {
       <div className="container-site flex flex-col gap-5 py-16 lg:gap-12 lg:py-[120px]">
         <SectionHead eyebrow={t(c.eyebrow, locale)} title={t(c.title, locale)} titleWidth="lg:max-w-[700px]" />
         <ul className="grid grid-cols-2 gap-x-3 gap-y-5 lg:grid-cols-4 lg:gap-6">
-          {c.items.map((s) => (
-            <li key={s.image}>
+          {c.items.map((s, i) => (
+            <li key={s.image} data-reveal style={{ "--i": i } as React.CSSProperties}>
               <Link href={href(locale, "/work")} className="group flex flex-col gap-[10px] lg:gap-4">
                 <div className="relative h-[150px] overflow-hidden rounded-[16px] lg:h-[240px] lg:rounded-[20px]">
                   <Image
@@ -21,7 +21,7 @@ export function Sectors({ locale }: { locale: Locale }) {
                     alt=""
                     fill
                     sizes="(min-width: 1024px) 292px, 50vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="media-zoom object-cover"
                   />
                 </div>
                 <h3 className="text-[15px] leading-[1.4] font-medium text-ink transition-colors group-hover:text-purple lg:text-[21px] lg:leading-[1.5]">

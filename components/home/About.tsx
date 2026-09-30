@@ -17,8 +17,10 @@ export function About({ locale }: { locale: Locale }) {
     <section className="bg-canvas">
       <div className="container-site flex flex-col items-start gap-[22px] py-[72px] lg:flex-row lg:items-center lg:justify-between lg:gap-[60px] lg:py-[130px] xl:gap-[90px]">
         <div className="contents lg:flex lg:min-w-0 lg:max-w-[590px] lg:flex-1 lg:flex-col lg:items-start lg:gap-7">
-          <Eyebrow className="order-1 lg:order-none">{t(c.eyebrow, locale)}</Eyebrow>
-          <h2 className="t-h2 order-2 lg:order-none">{t(c.title, locale)}</h2>
+          <div data-reveal className="order-1 flex flex-col items-start gap-[22px] lg:order-none lg:gap-7">
+            <Eyebrow>{t(c.eyebrow, locale)}</Eyebrow>
+            <h2 className="t-h2">{t(c.title, locale)}</h2>
+          </div>
           <p className="t-body-l order-3 lg:order-none lg:font-normal">{t(c.lead, locale)}</p>
           <p className="t-body-m hidden text-muted lg:block">{t(c.body, locale)}</p>
           <ul className="order-5 grid grid-cols-1 gap-3 lg:order-none lg:grid-cols-2 xl:grid-cols-[auto_auto] xl:justify-start lg:gap-x-6 lg:gap-y-4">

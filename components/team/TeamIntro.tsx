@@ -24,9 +24,11 @@ export function TeamIntro({ locale }: { locale: Locale }) {
           }}
         />
         <ul className="grid gap-[14px] lg:grid-cols-3 lg:gap-6">
-          {c.pillars.map((p) => (
+          {c.pillars.map((p, i) => (
             <li
               key={p.icon}
+              data-reveal
+              style={{ "--i": i } as React.CSSProperties}
               className={`flex items-center gap-[14px] rounded-[20px] p-[18px] lg:flex-col lg:items-start lg:gap-4 lg:rounded-[28px] lg:p-8 ${
                 p.featured ? "bg-purple" : "bg-white"
               }`}

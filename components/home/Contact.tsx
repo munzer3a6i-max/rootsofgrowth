@@ -51,14 +51,16 @@ export function Contact({ locale }: { locale: Locale }) {
     <section id="contact" className="bg-canvas">
       <div className="container-site flex flex-col items-start gap-4 py-[72px] lg:flex-row lg:justify-between lg:gap-12 lg:py-[130px] xl:gap-20">
         <div className="flex w-full flex-col items-start gap-4 lg:max-w-[460px] lg:gap-7">
-          <Eyebrow>{t(c.eyebrow, locale)}</Eyebrow>
-          <h2 className="t-h2">
-            <span className="lg:block">{t(c.titleLine1, locale)}</span>{" "}
-            <span className="lg:block">{t(c.titleLine2, locale)}</span>
-          </h2>
+          <div data-reveal className="flex flex-col items-start gap-4 lg:gap-7">
+            <Eyebrow>{t(c.eyebrow, locale)}</Eyebrow>
+            <h2 className="t-h2">
+              <span className="lg:block">{t(c.titleLine1, locale)}</span>{" "}
+              <span className="lg:block">{t(c.titleLine2, locale)}</span>
+            </h2>
+          </div>
           <p className="t-body-m hidden text-muted lg:block">{t(c.lead, locale)}</p>
           <ul className="flex w-full flex-col gap-4 lg:gap-7">
-            {rows.map((r) => {
+            {rows.map((r, i) => {
               const inner = (
                 <>
                   <span className="flex shrink-0 rounded-full bg-lilac-soft p-[10px] text-purple lg:p-[13px]">
@@ -78,9 +80,9 @@ export function Contact({ locale }: { locale: Locale }) {
               const cls =
                 "flex w-full items-center gap-3 rounded-[18px] bg-white px-4 py-[14px] lg:gap-4 lg:rounded-[20px] lg:px-5 lg:py-[18px]";
               return (
-                <li key={r.icon}>
+                <li key={r.icon} data-reveal style={{ "--i": i } as React.CSSProperties}>
                   {r.href ? (
-                    <a href={r.href} className={`${cls} transition-shadow hover:shadow-[0_12px_30px_rgba(31,26,77,0.08)]`}>
+                    <a href={r.href} className={`${cls} lift`}>
                       {inner}
                     </a>
                   ) : (

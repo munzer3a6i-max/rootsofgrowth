@@ -30,7 +30,7 @@ export function MotionObserver() {
     );
     const pending: HTMLElement[] = [];
     document.querySelectorAll<HTMLElement>("[data-reveal]:not([data-reveal-done])").forEach((el) => {
-      if (el.getBoundingClientRect().top > vh * 0.92) pending.push(el);
+      if (el.getBoundingClientRect().top >= vh) pending.push(el);
       else el.setAttribute("data-reveal-done", "");
     });
     // Hide below-the-fold items instantly (no fade-out), then re-enable transitions.

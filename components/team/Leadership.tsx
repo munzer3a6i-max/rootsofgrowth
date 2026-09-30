@@ -40,7 +40,7 @@ export function Leadership({ locale }: { locale: Locale }) {
         {/* Desktop: three columns */}
         <ul className="hidden grid-cols-3 gap-6 lg:grid">
           {leaders.map((l, i) => (
-            <li key={i} className="flex flex-col gap-[18px]">
+            <li key={i} data-reveal style={{ "--i": i } as React.CSSProperties} className="flex flex-col gap-[18px]">
               <Photo
                 leader={l}
                 locale={locale}

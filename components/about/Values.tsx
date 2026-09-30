@@ -15,9 +15,11 @@ export function Values({ locale }: { locale: Locale }) {
           side={{ text: t(c.side, locale), className: "max-w-[420px]" }}
         />
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {c.items.map((v) => (
+          {c.items.map((v, i) => (
             <li
               key={v.number}
+              data-reveal
+              style={{ "--i": i } as React.CSSProperties}
               className="flex items-center gap-[14px] rounded-[20px] bg-white p-[18px] lg:flex-col lg:items-stretch lg:gap-4 lg:rounded-[24px] lg:p-[30px]"
             >
               <div className="contents lg:flex lg:items-center lg:justify-between">

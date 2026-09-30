@@ -11,7 +11,7 @@ export function VisionMission({ locale }: { locale: Locale }) {
     <section className="relative overflow-hidden bg-ink text-white">
       <Mark size={520} className="absolute top-[240px] -end-[120px] hidden h-auto w-[520px] opacity-[0.04] lg:block" />
       <div className="container-site relative flex flex-col items-start gap-5 py-[72px] lg:flex-row lg:items-center lg:gap-16 lg:py-[130px]">
-        <div className="flex flex-col items-start gap-5 lg:w-[360px] lg:shrink-0 lg:gap-[26px]">
+        <div data-reveal className="flex flex-col items-start gap-5 lg:w-[360px] lg:shrink-0 lg:gap-[26px]">
           <Eyebrow tone="dark">{t(c.eyebrow, locale)}</Eyebrow>
           <h2 className="text-[30px] leading-[1.35] font-bold lg:text-[60px] lg:leading-[1.25] lg:tracking-[-0.5px]">
             <span className="lg:block">{t(c.title, locale)}</span>{" "}
@@ -24,6 +24,7 @@ export function VisionMission({ locale }: { locale: Locale }) {
           <Card
             locale={locale}
             tone="purple"
+            index={0}
             icon="target"
             title={t(c.visionTitle, locale)}
             sub="Vision"
@@ -37,6 +38,7 @@ export function VisionMission({ locale }: { locale: Locale }) {
           <Card
             locale={locale}
             tone="white"
+            index={1}
             icon="check"
             title={t(c.missionTitle, locale)}
             sub="Mission"
@@ -60,6 +62,7 @@ export function VisionMission({ locale }: { locale: Locale }) {
 function Card({
   locale,
   tone,
+  index,
   icon,
   title,
   sub,
@@ -68,6 +71,8 @@ function Card({
 }: {
   locale: Locale;
   tone: "purple" | "white";
+  /** Reveal stagger step. */
+  index: number;
   icon: IconName;
   title: string;
   sub: string;
@@ -77,6 +82,8 @@ function Card({
   const purple = tone === "purple";
   return (
     <article
+      data-reveal
+      style={{ "--i": index } as React.CSSProperties}
       className={`flex flex-col items-start gap-4 rounded-[24px] p-[26px] lg:min-h-[470px] lg:gap-[26px] lg:rounded-[28px] lg:p-10 ${
         purple ? "bg-purple text-white lg:shadow-[0_30px_60px_-10px_rgba(94,77,194,0.35)]" : "bg-white text-ink"
       }`}

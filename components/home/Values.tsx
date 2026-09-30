@@ -9,7 +9,7 @@ export function Values({ locale }: { locale: Locale }) {
     <section className="bg-white">
       <div className="container-site flex flex-col gap-[18px] py-[72px] lg:gap-14 lg:py-[120px]">
         <div className="flex flex-col items-start gap-[18px] lg:flex-row lg:items-end lg:justify-between lg:gap-10">
-          <div className="flex flex-col items-start gap-[18px] lg:gap-[22px]">
+          <div data-reveal className="flex flex-col items-start gap-[18px] lg:gap-[22px]">
             <Eyebrow>{t(c.eyebrow, locale)}</Eyebrow>
             <h2 className="t-h2 lg:max-w-[600px]">
               <span className="lg:block">{t(c.titleLine1, locale)}</span>{" "}
@@ -23,6 +23,8 @@ export function Values({ locale }: { locale: Locale }) {
           {c.items.map((v, i) => (
             <li
               key={v.number}
+              data-reveal
+              style={{ "--i": i } as React.CSSProperties}
               className={`flex flex-col items-start gap-2 rounded-[20px] bg-canvas p-[18px] lg:gap-[14px] lg:rounded-none lg:bg-transparent lg:px-7 lg:py-2 ${
                 i > 0 ? "lg:border-s lg:border-line" : ""
               }`}

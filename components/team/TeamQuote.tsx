@@ -11,7 +11,7 @@ export function TeamQuote({ locale }: { locale: Locale }) {
     <section className="relative overflow-hidden bg-ink">
       <Mark size={460} className="absolute -top-20 -start-[120px] hidden opacity-[0.04] lg:block" />
       <div className="container-site relative flex items-center justify-between gap-16 py-16 lg:py-[100px]">
-        <figure className="flex flex-col items-start gap-[14px] lg:max-w-[600px] lg:gap-[22px]">
+        <figure data-reveal className="flex flex-col items-start gap-[14px] lg:max-w-[600px] lg:gap-[22px]">
           <span aria-hidden="true" className="h-[70px] font-serif text-[64px] leading-[1.1] tracking-[-0.5px] text-lilac lg:h-[106px] lg:text-[96px]">
             “
           </span>

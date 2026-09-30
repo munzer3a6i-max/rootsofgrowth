@@ -28,9 +28,11 @@ export function TeamTeaser({ locale }: { locale: Locale }) {
           <Image src="/images/team.jpg" alt={t(c.imageAlt, locale)} fill sizes="(min-width: 1440px) 1240px, 100vw" className="object-cover" />
         </div>
         <ul className="grid gap-5 lg:grid-cols-3 lg:gap-6">
-          {c.roles.map((r) => (
+          {c.roles.map((r, i) => (
             <li
               key={r.icon}
+              data-reveal
+              style={{ "--i": i } as React.CSSProperties}
               className="flex items-center gap-3 rounded-[18px] bg-white p-4 lg:items-start lg:gap-[18px] lg:rounded-[24px] lg:p-7"
             >
               <span className="flex shrink-0 items-center justify-center rounded-full bg-purple p-[10px] text-white lg:p-[14px]">

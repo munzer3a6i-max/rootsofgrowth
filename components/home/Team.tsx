@@ -15,11 +15,13 @@ export function Team({ locale }: { locale: Locale }) {
     <section className="bg-canvas">
       <div className="container-site flex flex-col items-start gap-5 py-[72px] lg:flex-row lg:items-center lg:justify-between lg:gap-[60px] lg:py-[130px] xl:gap-[90px]">
         <div className="contents lg:flex lg:max-w-[560px] lg:flex-1 lg:flex-col lg:items-start lg:gap-7">
-          <Eyebrow className="order-1 lg:order-none">{t(c.eyebrow, locale)}</Eyebrow>
-          <h2 className="t-h2 order-2 lg:order-none">
-            <span className="lg:block">{t(c.titleLine1, locale)}</span>{" "}
-            <span className="lg:block">{t(c.titleLine2, locale)}</span>
-          </h2>
+          <div data-reveal className="order-1 flex flex-col items-start gap-5 lg:order-none lg:gap-7">
+            <Eyebrow>{t(c.eyebrow, locale)}</Eyebrow>
+            <h2 className="t-h2">
+              <span className="lg:block">{t(c.titleLine1, locale)}</span>{" "}
+              <span className="lg:block">{t(c.titleLine2, locale)}</span>
+            </h2>
+          </div>
           <p className="t-body-l order-4 lg:order-none lg:font-normal">{t(c.lead, locale)}</p>
           <ul className="hidden flex-wrap gap-[10px] lg:flex">
             {c.chips.map((chip) => (

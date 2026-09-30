@@ -17,7 +17,7 @@ export function Services({ locale }: { locale: Locale }) {
     <section className="bg-canvas">
       <div className="container-site flex flex-col gap-4 py-[72px] lg:gap-14 lg:py-[130px]">
         <div className="flex flex-col items-start gap-4 pb-[6px] lg:flex-row lg:items-end lg:justify-between lg:gap-10 lg:pb-0">
-          <div className="flex flex-col items-start gap-4 lg:gap-[22px]">
+          <div data-reveal className="flex flex-col items-start gap-4 lg:gap-[22px]">
             <Eyebrow>{t(c.eyebrow, locale)}</Eyebrow>
             <h2 className="t-h2 lg:max-w-[620px]">
               <span className="lg:block">{t(c.titleLine1, locale)}</span>{" "}
@@ -34,11 +34,11 @@ export function Services({ locale }: { locale: Locale }) {
 
         {/* Desktop / tablet grid */}
         <ul className="hidden gap-x-6 gap-y-14 md:grid md:grid-cols-2 lg:grid-cols-4">
-          {services.map((s) => (
-            <li key={s.slug} className="flex">
+          {services.map((s, i) => (
+            <li key={s.slug} data-reveal style={{ "--i": i } as React.CSSProperties} className="flex">
               <Link
                 href={href(locale, `/services/${s.slug}`)}
-                className="group flex w-full flex-col gap-[18px] rounded-[24px] bg-white px-3 pt-3 pb-[26px] transition-shadow duration-300 hover:shadow-[0_20px_40px_rgba(31,26,77,0.10)]"
+                className="group lift flex w-full flex-col gap-[18px] rounded-[24px] bg-white px-3 pt-3 pb-[26px]"
               >
                 <div className="relative h-[200px] overflow-hidden rounded-[16px]">
                   <Image
@@ -46,14 +46,14 @@ export function Services({ locale }: { locale: Locale }) {
                     alt=""
                     fill
                     sizes="(min-width: 1024px) 268px, 50vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="media-zoom object-cover"
                   />
                 </div>
                 <div className="flex flex-col gap-[10px] px-[14px]">
                   <div className="flex items-center justify-between">
                     <span className="font-serif text-[30px] leading-[1.1] tracking-[-0.5px] text-purple">{s.number}</span>
                     <span className="flex rounded-full border border-line p-[9px] text-ink transition-colors group-hover:border-purple group-hover:bg-purple group-hover:text-white">
-                      <Icon name="arrow-up-left" size={16} />
+                      <Icon name="arrow-up-left" size={16} className="nudge" />
                     </span>
                   </div>
                   <h3 className="text-[19px] leading-[1.5] font-medium">{t(s.title, locale)}</h3>
@@ -66,14 +66,14 @@ export function Services({ locale }: { locale: Locale }) {
 
         {/* Mobile list */}
         <ul className="flex flex-col gap-4 md:hidden">
-          {services.map((s) => (
-            <li key={s.slug}>
+          {services.map((s, i) => (
+            <li key={s.slug} data-reveal style={{ "--i": i } as React.CSSProperties}>
               <Link
                 href={href(locale, `/services/${s.slug}`)}
-                className="flex items-center gap-[14px] rounded-[20px] bg-white p-[10px]"
+                className="group press flex items-center gap-[14px] rounded-[20px] bg-white p-[10px]"
               >
                 <div className="relative size-24 shrink-0 overflow-hidden rounded-[14px]">
-                  <Image src={s.image} alt="" fill sizes="96px" className="object-cover" />
+                  <Image src={s.image} alt="" fill sizes="96px" className="media-zoom object-cover" />
                 </div>
                 <div className="flex min-w-0 flex-1 flex-col items-start gap-1">
                   <span className="font-serif text-[20px] leading-[1.1] tracking-[-0.5px] text-purple">{s.number}</span>
@@ -87,7 +87,7 @@ export function Services({ locale }: { locale: Locale }) {
                   )}
                 </div>
                 <span className="flex shrink-0 rounded-full border border-line p-2 text-ink">
-                  <Icon name="arrow-up-left" size={14} />
+                  <Icon name="arrow-up-left" size={14} className="nudge" />
                 </span>
               </Link>
             </li>

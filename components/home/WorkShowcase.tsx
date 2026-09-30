@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ViewTransition } from "react";
 import Link from "next/link";
 import { href, t, type Locale } from "@/lib/i18n";
 import { home } from "@/content/home";
@@ -19,7 +20,7 @@ export function WorkShowcase({ locale }: { locale: Locale }) {
     <section className="bg-ink text-white">
       <div className="container-site flex flex-col gap-[18px] py-[72px] lg:gap-14 lg:py-[130px]">
         <div className="flex items-end justify-between gap-10">
-          <div className="flex flex-col items-start gap-[18px] lg:gap-[22px]">
+          <div data-reveal className="flex flex-col items-start gap-[18px] lg:gap-[22px]">
             <Eyebrow tone="dark">{t(c.eyebrow, locale)}</Eyebrow>
             <h2 className="t-h2 lg:max-w-[600px]">
               <span className="lg:block">{t(c.titleLine1, locale)}</span>{" "}
@@ -40,17 +41,19 @@ export function WorkShowcase({ locale }: { locale: Locale }) {
               project={get(slug)}
               locale={locale}
               size={i === 0 ? "wide" : "tall"}
+              index={i}
               className={i === 0 ? "h-[420px] md:col-span-2 lg:col-span-1 lg:h-[540px]" : "h-[300px] lg:h-[540px]"}
             />
           ))}
         </div>
         <div className="grid grid-cols-1 gap-[18px] md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-          {c.row2.map((slug) => (
+          {c.row2.map((slug, i) => (
             <ProjectTile
               key={slug}
               project={get(slug)}
               locale={locale}
               size="regular"
+              index={i}
               className={`h-[300px] lg:h-[460px] ${mobileSet.has(slug) ? "" : "hidden md:block"}`}
             />
           ))}
@@ -75,17 +78,24 @@ function ProjectTile({
   project,
   locale,
   size,
+  index,
   className,
 }: {
   project: Project;
   locale: Locale;
   size: "wide" | "tall" | "regular";
+  /** Position in its row, for the reveal stagger. */
+  index: number;
   className: string;
 }) {
   const wide = size === "wide";
+  // Morphs into the project page hero on navigation (same name as ProjectHero).
   return (
+    <ViewTransition name={`project-${project.slug}`} share="morph" default="none">
     <Link
       href={href(locale, `/work/${project.slug}`)}
+      data-reveal
+      style={{ "--i": index } as React.CSSProperties}
       className={`group relative block overflow-hidden rounded-[22px] bg-ink-soft lg:rounded-[24px] ${className}`}
     >
       <Image
@@ -93,7 +103,7 @@ function ProjectTile({
         alt=""
         fill
         sizes={wide ? "(min-width: 1024px) 816px, 100vw" : "(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"}
-        className="object-cover transition-transform duration-700 group-hover:scale-105"
+        className="media-zoom object-cover"
       />
       <div
         aria-hidden="true"
@@ -120,8 +130,9 @@ function ProjectTile({
         </h3>
       </div>
       <span className="absolute end-8 bottom-8 hidden rounded-full bg-white p-[14px] text-ink transition-colors group-hover:bg-purple group-hover:text-white lg:flex">
-        <Icon name="arrow-up-left" size={20} />
+        <Icon name="arrow-up-left" size={20} className="nudge" />
       </span>
     </Link>
+    </ViewTransition>
   );
 }

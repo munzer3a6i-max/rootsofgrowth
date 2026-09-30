@@ -24,7 +24,7 @@ export function ScrollDots({ targetId, count, className = "" }: { targetId: stri
       {Array.from({ length: count }, (_, i) => (
         <span
           key={i}
-          className={`h-2 rounded-[4px] transition-all duration-300 ${i === active ? "w-[22px] bg-purple" : "w-2 bg-line"}`}
+          className={`h-2 rounded-[4px] transition-[width,background-color] duration-300 ease-out ${i === active ? "w-[22px] bg-purple" : "w-2 bg-line"}`}
         />
       ))}
     </div>

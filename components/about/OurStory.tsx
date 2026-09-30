@@ -12,8 +12,10 @@ export function OurStory({ locale }: { locale: Locale }) {
       <div className="container-site section-y flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between lg:gap-[90px]">
         {/* Text (start side) */}
         <div className="flex flex-col items-start gap-5 lg:max-w-[590px] lg:gap-[26px]">
-          <EyebrowR>{t(c.eyebrow, locale)}</EyebrowR>
-          <h2 className="t-h2 text-ink">{t(c.title, locale)}</h2>
+          <div data-reveal className="flex flex-col items-start gap-5 lg:gap-[26px]">
+            <EyebrowR>{t(c.eyebrow, locale)}</EyebrowR>
+            <h2 className="t-h2 text-ink">{t(c.title, locale)}</h2>
+          </div>
           <p className="t-body-l text-ink lg:font-normal">{t(c.lead, locale)}</p>
           <p className="t-body-m hidden text-muted lg:block">{t(c.body, locale)}</p>
           <div className="hidden items-center gap-[14px] lg:flex">

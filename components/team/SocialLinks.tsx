@@ -32,7 +32,7 @@ export function SocialLinks({
             href={it.href}
             aria-label={`${it.label} — ${t(person.name, locale)}`}
             {...(it.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            className={`${cls} transition-colors hover:border-purple hover:text-purple`}
+            className={`${cls} press hover:border-purple hover:text-purple`}
           >
             <Icon name={it.icon} size={iconSize} />
           </a>

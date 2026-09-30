@@ -145,7 +145,7 @@ export function HomeContactForm({
         <button
           type="button"
           onClick={() => setStatus({ kind: "idle" })}
-          className="t-label mt-2 text-purple underline-offset-4 hover:underline"
+          className="press t-label mt-2 text-purple underline-offset-4 hover:underline"
         >
           {L.again}
         </button>
