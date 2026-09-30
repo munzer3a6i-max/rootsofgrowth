@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { href, t, type Locale } from "@/lib/i18n";
 import { siteUrl } from "@/lib/metadata";
@@ -63,7 +64,7 @@ function Gallery({ project, detail, locale }: { project: Project; detail: Projec
               : "aspect-square lg:col-span-2 lg:aspect-auto lg:h-[220px]";
         const alt = img.alt ? t(img.alt, locale) : t(L.galleryAlt, locale).replace("{title}", title);
         return (
-          <li key={img.src} className={`relative overflow-hidden rounded-[20px] bg-ink-soft ${size}`}>
+          <li key={img.src} data-reveal style={{ "--i": i } as CSSProperties} className={`relative overflow-hidden rounded-[20px] bg-ink-soft ${size}`}>
             <Image
               src={img.src}
               alt={alt}
@@ -119,7 +120,7 @@ function ShareCard({ project, locale }: { project: Project; locale: Locale }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={l.label}
-              className="flex rounded-full border border-line p-[10px] text-ink transition-colors hover:border-purple hover:text-purple"
+              className="press flex rounded-full border border-line p-[10px] text-ink hover:border-purple hover:text-purple"
             >
               <Icon name={l.icon} size={16} />
             </a>

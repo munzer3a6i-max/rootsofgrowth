@@ -23,7 +23,7 @@ export function LanguageSwitch({
       hrefLang={other}
       lang={other}
       aria-label={other === "en" ? "English" : "العربية"}
-      className={`t-label inline-flex items-center gap-[6px] rounded-full border border-on-dark-muted px-[14px] py-[10px] text-white transition-colors hover:border-white hover:bg-white/10 ${className}`}
+      className={`t-label inline-flex items-center gap-[6px] press rounded-full border border-on-dark-muted px-[14px] py-[10px] text-white hover:border-white hover:bg-white/10 ${className}`}
     >
       {showGlobe && <Icon name="globe" size={16} />}
       <span>{other === "en" ? "EN" : "عربي"}</span>

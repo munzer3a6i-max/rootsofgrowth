@@ -17,7 +17,7 @@ const variants: Record<ButtonVariant, string> = {
 };
 
 export function buttonClasses(variant: ButtonVariant = "primary", extra = "") {
-  return `t-button inline-flex items-center justify-center gap-[10px] rounded-full px-7 py-4 whitespace-nowrap transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed ${variants[variant]} ${extra}`;
+  return `t-button inline-flex items-center justify-center gap-[10px] group press rounded-full px-7 py-4 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed ${variants[variant]} ${extra}`;
 }
 
 type Common = {
@@ -39,7 +39,7 @@ export function Button({
   const inner = (
     <>
       <span>{children}</span>
-      {icon && <Icon name={icon} size={20} />}
+      {icon && <Icon name={icon} size={20} className="nudge" />}
     </>
   );
   if (external) {
@@ -66,7 +66,7 @@ export function SubmitButton({
   return (
     <button className={buttonClasses(variant, className)} {...rest}>
       <span>{children}</span>
-      {icon && <Icon name={icon} size={20} />}
+      {icon && <Icon name={icon} size={20} className="nudge" />}
     </button>
   );
 }

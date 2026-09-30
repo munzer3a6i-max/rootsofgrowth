@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ViewTransition } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import type { Project } from "@/content/projects";
 import { projectDetailLabels as L } from "@/content/project-detail";
@@ -12,7 +13,9 @@ import { Icon } from "@/components/Icon";
  */
 export function ProjectHero({ project, locale }: { project: Project; locale: Locale }) {
   const other: Locale = locale === "ar" ? "en" : "ar";
+  // Shares its view-transition name with the portfolio card, so the card morphs into this hero.
   return (
+    <ViewTransition name={`project-${project.slug}`} share="morph" default="none">
     <section className="relative isolate flex h-[520px] items-end overflow-hidden bg-ink text-white lg:h-[680px]">
       <Image src={project.image} alt="" fill priority sizes="100vw" className="-z-10 object-cover" />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-b from-ink/10 from-20% to-ink/96 lg:to-ink/95" />
@@ -47,5 +50,6 @@ export function ProjectHero({ project, locale }: { project: Project; locale: Loc
         </div>
       </div>
     </section>
+    </ViewTransition>
   );
 }

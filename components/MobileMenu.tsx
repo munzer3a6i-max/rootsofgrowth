@@ -28,12 +28,20 @@ export function MobileMenu({
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const closeRef = useRef<HTMLButtonElement>(null);
+  const openRef = useRef<HTMLButtonElement>(null);
+  const wasOpen = useRef(false);
 
   // Close when navigating.
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      // Return focus to the trigger after closing.
+      if (wasOpen.current) openRef.current?.focus();
+      wasOpen.current = false;
+      return;
+    }
+    wasOpen.current = true;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     closeRef.current?.focus();
@@ -48,24 +56,29 @@ export function MobileMenu({
   return (
     <>
       <button
+        ref={openRef}
         type="button"
         onClick={() => setOpen(true)}
         aria-label={labels.open}
         aria-expanded={open}
         aria-controls="mobile-menu"
-        className="rounded-full border border-on-dark-muted p-[11px] text-white transition-colors hover:bg-white/10"
+        className="press rounded-full border border-on-dark-muted p-[11px] text-white hover:bg-white/10"
       >
         <Icon name="menu" size={20} />
       </button>
 
-      {open && (
+      {/* Always mounted so it can animate out; `inert` + hidden when closed.
+          Enter: overlay fades (300ms), rows rise with a short stagger. Exit: 200ms, no stagger. */}
         <div
           id="mobile-menu"
           role="dialog"
           aria-modal="true"
+          aria-hidden={!open}
+          inert={!open}
+          data-open={open}
           aria-label={labels.name}
           dir={locale === "ar" ? "rtl" : "ltr"}
-          className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-ink px-5 pt-4 pb-8 text-white"
+          className="group/menu fixed inset-0 z-50 flex flex-col overflow-y-auto bg-ink px-5 pt-4 pb-8 text-white transition-[opacity,visibility] duration-200 ease-out data-[open=false]:invisible data-[open=false]:opacity-0 data-[open=true]:duration-300"
         >
           <Mark size={300} className="absolute -bottom-10 -end-20 opacity-5" />
           <div className="relative flex items-center justify-between">
@@ -77,7 +90,7 @@ export function MobileMenu({
               type="button"
               onClick={() => setOpen(false)}
               aria-label={labels.close}
-              className="rounded-full bg-purple p-[11px] text-white"
+              className="press rounded-full bg-purple p-[11px] text-white"
             >
               <Icon name="close" size={20} />
             </button>
@@ -88,12 +101,16 @@ export function MobileMenu({
               {items.map((item, i) => {
                 const isActive = item.key === active;
                 return (
-                  <li key={item.key} className="border-b border-white/10">
+                  <li
+                    key={item.key}
+                    style={{ transitionDelay: open ? `${60 + i * 40}ms` : "0ms" }}
+                    className="border-b border-white/10 transition-[opacity,translate] duration-500 ease-out group-data-[open=false]/menu:translate-y-3 group-data-[open=false]/menu:opacity-0 group-data-[open=false]/menu:duration-150 motion-reduce:translate-y-0"
+                  >
                     <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
                       aria-current={isActive ? "page" : undefined}
-                      className="flex items-center justify-between py-[18px]"
+                      className="group flex items-center justify-between py-[18px]"
                     >
                       <span className="flex items-center gap-3">
                         <span className="t-serif-italic text-[14px] leading-[1.3] text-lilac">
@@ -107,7 +124,7 @@ export function MobileMenu({
                           {item.label}
                         </span>
                       </span>
-                      <Icon name="arrow-left" size={18} className="text-lilac" />
+                      <Icon name="arrow-left" size={18} className="nudge text-lilac" />
                     </Link>
                   </li>
                 );
@@ -135,7 +152,6 @@ export function MobileMenu({
             </a>
           </div>
         </div>
-      )}
     </>
   );
 }

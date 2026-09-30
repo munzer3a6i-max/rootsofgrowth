@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { dirOf, isLocale, locales } from "@/lib/i18n";
 import { siteUrl } from "@/lib/metadata";
 import { site } from "@/content/site";
+import { MotionObserver } from "@/components/MotionObserver";
 import "../globals.css";
 
 /**
@@ -58,7 +59,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 
   return (
     <html lang={locale} dir={dirOf(locale)} className={`${thmanyah.variable} ${dmSerif.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <MotionObserver />
+      </body>
     </html>
   );
 }

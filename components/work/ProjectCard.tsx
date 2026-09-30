@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ViewTransition } from "react";
 import { href, t, type Locale } from "@/lib/i18n";
 import type { Project } from "@/content/projects";
 import { work } from "@/content/work";
@@ -19,7 +20,9 @@ export function ProjectCard({
   locale: Locale;
   featured?: boolean;
 }) {
+  // The card morphs into the project page hero (same view-transition name).
   return (
+    <ViewTransition name={`project-${project.slug}`} share="morph" default="none">
     <Link
       href={href(locale, `/work/${project.slug}`)}
       className={`group relative block overflow-hidden rounded-[22px] bg-ink lg:rounded-[28px] ${
@@ -31,7 +34,7 @@ export function ProjectCard({
         alt=""
         fill
         sizes={featured ? "(min-width: 1440px) 1240px, 100vw" : "(min-width: 1440px) 608px, (min-width: 768px) 50vw, 100vw"}
-        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        className="media-zoom object-cover"
       />
       <div aria-hidden="true" className="absolute inset-0 bg-linear-to-b from-ink/0 from-30% to-ink/94" />
 
@@ -57,11 +60,12 @@ export function ProjectCard({
           </h2>
         </div>
 
-        <span className="t-label hidden shrink-0 items-center gap-2 rounded-full bg-white px-5 py-3.5 text-ink transition-colors group-hover:bg-lilac-soft lg:inline-flex">
+        <span className="t-label hidden shrink-0 items-center gap-2 rounded-full bg-white px-5 py-3.5 text-ink transition-colors duration-200 group-hover:bg-lilac-soft lg:inline-flex">
           <span>{t(work.viewProject, locale)}</span>
-          <Icon name="arrow-up-left" size={18} />
+          <Icon name="arrow-up-left" size={18} className="nudge" />
         </span>
       </div>
     </Link>
+    </ViewTransition>
   );
 }

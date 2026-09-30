@@ -1,0 +1,52 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+
+/**
+ * Drives the site's scroll-linked motion without hiding content by default:
+ * - [data-reveal]: items that start below the fold are marked pending (hidden),
+ *   then revealed once as they scroll in. Items already on screen are left alone,
+ *   so nothing flashes and nothing depends on JS to be visible.
+ * - [data-loop]: infinite loops (tickers) get [data-offscreen] while not visible,
+ *   which pauses their animation.
+ */
+export function MotionObserver() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const vh = window.innerHeight;
+    const reveal = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const el = e.target as HTMLElement;
+          el.removeAttribute("data-reveal-pending");
+          el.setAttribute("data-reveal-done", "");
+          reveal.unobserve(el);
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px" },
+    );
+    document.querySelectorAll<HTMLElement>("[data-reveal]:not([data-reveal-done])").forEach((el) => {
+      if (el.getBoundingClientRect().top > vh * 0.92) {
+        el.setAttribute("data-reveal-pending", "");
+        reveal.observe(el);
+      } else {
+        el.setAttribute("data-reveal-done", "");
+      }
+    });
+
+    const loops = new IntersectionObserver((entries) => {
+      for (const e of entries) e.target.toggleAttribute("data-offscreen", !e.isIntersecting);
+    });
+    document.querySelectorAll("[data-loop]").forEach((el) => loops.observe(el));
+
+    return () => {
+      reveal.disconnect();
+      loops.disconnect();
+    };
+  }, [pathname]);
+
+  return null;
+}

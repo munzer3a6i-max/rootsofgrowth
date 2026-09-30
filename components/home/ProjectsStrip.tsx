@@ -21,7 +21,7 @@ export function ProjectsStrip({ locale }: { locale: Locale }) {
   );
 
   return (
-    <section className="bg-white">
+    <section data-loop className="bg-white">
       <div className="flex flex-col items-center gap-[6px] py-5 lg:gap-2 lg:pt-[22px] lg:pb-[26px]">
         <p className="container-site text-center text-[13px] leading-[1.4] font-medium text-muted lg:text-[14px]">
           {t(home.strip.title, locale)}

@@ -57,8 +57,8 @@ export function Header({ locale, active }: { locale: Locale; active?: NavKey }) 
                     <span>{item.label}</span>
                     <span
                       aria-hidden="true"
-                      className={`h-[3px] w-[18px] rounded-[2px] bg-purple transition-opacity ${
-                        isActive ? "opacity-100" : "opacity-0 group-hover:opacity-60"
+                      className={`h-[3px] w-[18px] rounded-[2px] bg-purple transition-[opacity,scale] duration-200 ease-out ${
+                        isActive ? "opacity-100" : "scale-x-50 opacity-0 group-hover:scale-x-100 group-hover:opacity-60"
                       }`}
                     />
                   </Link>

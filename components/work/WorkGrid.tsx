@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { startTransition, useId, useState, ViewTransition, type CSSProperties } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { projectCategories, projects, type ProjectCategory } from "@/content/projects";
 import { work } from "@/content/work";
@@ -18,6 +18,8 @@ function countFor(key: FilterKey) {
  * Chips are toggle buttons (aria-pressed) that filter the grid client-side.
  * With an odd number of results the first card is the wide "featured" card,
  * so the two-column grid never leaves a gap.
+ * Filtering runs in a transition, so cards crossfade and glide to their new
+ * slots (<ViewTransition> per card) instead of teleporting.
  */
 export function WorkGrid({ locale }: { locale: Locale }) {
   const [active, setActive] = useState<FilterKey>("all");
@@ -43,8 +45,8 @@ export function WorkGrid({ locale }: { locale: Locale }) {
                 aria-pressed={pressed}
                 aria-label={`${t(c.label, locale)} (${countFor(c.key)})`}
                 aria-controls={gridId}
-                onClick={() => setActive(c.key)}
-                className={`t-label inline-flex shrink-0 cursor-pointer items-center gap-1.5 rounded-full border px-3.5 py-[9px] whitespace-nowrap transition-colors lg:gap-2 lg:px-[18px] lg:py-[11px] ${
+                onClick={() => startTransition(() => setActive(c.key))}
+                className={`t-label inline-flex shrink-0 cursor-pointer items-center gap-1.5 press rounded-full border px-3.5 py-[9px] whitespace-nowrap lg:gap-2 lg:px-[18px] lg:py-[11px] ${
                   pressed ? "border-ink bg-ink text-white" : "border-line bg-white text-ink hover:border-purple"
                 }`}
               >
@@ -70,14 +72,18 @@ export function WorkGrid({ locale }: { locale: Locale }) {
           {visible.map((p, i) => {
             const featured = featureFirst && i === 0;
             return (
-              <li key={p.slug} className={featured ? "md:col-span-2" : undefined}>
-                <ProjectCard project={p} locale={locale} featured={featured} />
-              </li>
+              <ViewTransition key={p.slug}>
+                <li data-reveal style={{ "--i": i } as CSSProperties} className={featured ? "md:col-span-2" : undefined}>
+                  <ProjectCard project={p} locale={locale} featured={featured} />
+                </li>
+              </ViewTransition>
             );
           })}
-          <li className="md:col-span-2">
-            <NextProjectCard locale={locale} />
-          </li>
+          <ViewTransition>
+            <li data-reveal className="md:col-span-2">
+              <NextProjectCard locale={locale} />
+            </li>
+          </ViewTransition>
         </ul>
       </section>
     </>

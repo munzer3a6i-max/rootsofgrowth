@@ -9,7 +9,7 @@ import { Icon } from "@/components/Icon";
  */
 export function Marquee({ locale }: { locale: Locale }) {
   return (
-    <section aria-label={home.marquee.purple.map((w) => t(w, locale)).join(" · ")} className="relative h-[90px] overflow-hidden bg-canvas lg:h-[150px]">
+    <section data-loop aria-label={home.marquee.purple.map((w) => t(w, locale)).join(" · ")} className="relative h-[90px] overflow-hidden bg-canvas lg:h-[150px]">
       <Band
         words={home.marquee.dark}
         locale={locale}

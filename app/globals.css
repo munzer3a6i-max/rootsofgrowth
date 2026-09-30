@@ -24,6 +24,12 @@
   --font-serif: var(--font-dm-serif), "DM Serif Display", Georgia, serif;
 
   --breakpoint-xs: 30rem;
+
+  /* Motion tokens (Emil Kowalski's curves). Tailwind's ease-out / ease-in-out
+     utilities now use these strong curves site-wide. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 /* ───────── Typography scale (AR/* text styles in Figma) ───────── */
@@ -175,12 +181,29 @@
     html {
       scroll-behavior: auto;
     }
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
-    }
+  }
+
+  /* Browser surfaces, themed from the palette. */
+  ::selection {
+    background: var(--color-lilac);
+    color: var(--color-ink);
+  }
+  html {
+    accent-color: var(--color-purple);
+    caret-color: var(--color-purple);
+    scrollbar-color: color-mix(in oklab, var(--color-ink) 35%, transparent) transparent;
+    /* Lets <details> animate to/from height: auto (progressive enhancement). */
+    interpolate-size: allow-keywords;
+  }
+  a {
+    text-underline-offset: 0.25em;
+  }
+  /* Arrow nudge direction follows reading direction. */
+  :root {
+    --dir: 1;
+  }
+  [dir="rtl"] {
+    --dir: -1;
   }
 }
 
@@ -197,5 +220,257 @@
   animation: marquee 40s linear infinite;
   &:where([dir="rtl"] *) {
     animation-direction: reverse;
+  }
+  /* Loops stop when their section is offscreen (see MotionObserver). */
+  &:where([data-offscreen] *) {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* ───────── Motion system ─────────
+ * Feedback: buttons/links press (100–160ms). Hover motion is gated to fine
+ * pointers by Tailwind v4's hover variant. Reduced motion keeps opacity/colour
+ * and drops movement.
+ */
+
+/* Press feedback for pressable things. */
+@utility press {
+  transition-property: transform, background-color, border-color, color, box-shadow;
+  transition-duration: 160ms;
+  transition-timing-function: var(--ease-out);
+  &:active {
+    transform: scale(0.97);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &:active {
+      transform: none;
+    }
+  }
+}
+
+/* Arrow that nudges forward (reading direction) when its group is hovered. */
+@utility nudge {
+  transition: translate 200ms var(--ease-out);
+  &:where(.group:hover *) {
+    @media (hover: hover) and (pointer: fine) {
+      translate: calc(var(--dir) * 3px) 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/* Photo that zooms slightly inside its clipped frame when the card is hovered. */
+@utility media-zoom {
+  transition: scale 700ms var(--ease-out);
+  &:where(.group:hover *) {
+    @media (hover: hover) and (pointer: fine) {
+      scale: 1.04;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    &:where(.group:hover *) {
+      scale: none;
+    }
+  }
+}
+
+/* Card lift on hover — tiny, since cards are seen tens of times per visit. */
+@utility lift {
+  transition:
+    translate 250ms var(--ease-out),
+    box-shadow 250ms var(--ease-out);
+  &:where(.group:hover, :hover) {
+    @media (hover: hover) and (pointer: fine) {
+      translate: 0 -3px;
+      box-shadow: 0 18px 40px -22px color-mix(in oklab, var(--color-ink) 45%, transparent);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    translate: none !important;
+  }
+}
+
+/* Scroll reveal — marketing surfaces only, fires once. Content is visible by
+ * default; MotionObserver marks below-the-fold items pending, then revealed.
+ * Stagger with style={{ "--i": n }} (capped at 6 steps ≈ 300ms). */
+[data-reveal] {
+  transition:
+    opacity 700ms var(--ease-out),
+    translate 700ms var(--ease-out),
+    filter 700ms var(--ease-out);
+  transition-delay: calc(min(var(--i, 0), 6) * 60ms);
+}
+[data-reveal][data-reveal-pending] {
+  opacity: 0;
+  translate: 0 18px;
+  filter: blur(4px);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    transition: opacity 400ms ease;
+    transition-delay: 0ms;
+  }
+  [data-reveal][data-reveal-pending] {
+    translate: none;
+    filter: none;
+  }
+}
+
+/* Accordions (<details>): smooth open/close where ::details-content is
+ * supported (Chromium 131+); elsewhere they simply snap, as before. */
+details::details-content {
+  block-size: 0;
+  opacity: 0;
+  overflow: clip;
+  transition:
+    block-size 260ms var(--ease-out),
+    opacity 200ms var(--ease-out),
+    content-visibility 260ms allow-discrete;
+}
+details[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  details::details-content {
+    transition:
+      opacity 200ms ease,
+      content-visibility 200ms allow-discrete;
+  }
+}
+
+/* ───────── Page transitions (React <ViewTransition>, see PageShell) ─────────
+ * The page body crossfades with a short rise; the header stays anchored.
+ * Unsupported browsers navigate instantly, as before. */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+::view-transition-old(.page) {
+  animation: 160ms var(--ease-out) both vt-fade-out;
+}
+::view-transition-new(.page) {
+  animation: 420ms var(--ease-out) 90ms both vt-rise-in;
+}
+/* Shared photo (card → project/service hero). */
+::view-transition-group(.morph) {
+  animation-duration: 450ms;
+  animation-timing-function: var(--ease-in-out);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: vt-via-blur;
+}
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-rise-in {
+  from {
+    opacity: 0;
+    translate: 0 14px;
+  }
+}
+@keyframes vt-via-blur {
+  30% {
+    filter: blur(3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(.page) {
+    animation: 200ms ease both vt-fade-in-only;
+  }
+  ::view-transition-group(.morph) {
+    animation-duration: 0s;
+  }
+}
+@keyframes vt-fade-in-only {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ───────── Home hero — the one authored entrance ─────────
+ * "Roots growing": the arch photo unmasks upward from the ground line, the
+ * headline lines rise out of their own line box, the mark badge settles last.
+ * Plays once on load (CSS, off the main thread). */
+@keyframes hero-arch {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes hero-line {
+  from {
+    opacity: 0;
+    translate: 0 0.45em;
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+}
+@keyframes hero-badge {
+  from {
+    opacity: 0;
+    scale: 0.9;
+    rotate: -12deg;
+  }
+}
+@keyframes hero-settle {
+  from {
+    scale: 1.08;
+  }
+}
+@utility hero-arch {
+  animation: hero-arch 1100ms var(--ease-out) both;
+  & img {
+    animation: hero-settle 1400ms var(--ease-out) both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    animation: hero-fade 400ms ease both;
+  }
+}
+@utility hero-line {
+  animation: hero-line 800ms var(--ease-out) both;
+  animation-delay: calc(150ms + var(--i, 0) * 90ms);
+  @media (prefers-reduced-motion: reduce) {
+    animation: vt-fade-in-only 400ms ease both;
+  }
+}
+@utility hero-fade {
+  animation: hero-fade 700ms var(--ease-out) both;
+  animation-delay: calc(350ms + var(--i, 0) * 70ms);
+  @media (prefers-reduced-motion: reduce) {
+    animation: vt-fade-in-only 400ms ease both;
+  }
+}
+@utility hero-badge {
+  animation: hero-badge 700ms var(--ease-out) 700ms both;
+  @media (prefers-reduced-motion: reduce) {
+    animation: vt-fade-in-only 400ms ease 200ms both;
   }
 }

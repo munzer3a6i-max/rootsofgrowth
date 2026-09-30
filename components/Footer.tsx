@@ -21,7 +21,7 @@ function Socials({ size }: { size: "sm" | "lg" }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={s.label}
-            className={`flex rounded-full border border-white/25 text-white transition-colors hover:border-white hover:bg-white/10 ${
+            className={`press flex rounded-full border border-white/25 text-white hover:border-white hover:bg-white/10 ${
               size === "lg" ? "p-[11px]" : "p-[10px]"
             }`}
           >

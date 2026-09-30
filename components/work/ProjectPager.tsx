@@ -28,14 +28,14 @@ export function ProjectPager({ slug, locale }: { slug: string; locale: Locale })
               <span className="lg:hidden">{t(L.prevShort, locale)}</span>
               <span className="hidden lg:inline">{t(L.prev, locale)}</span>
             </span>
-            <span className="t-label text-ink group-hover:text-purple lg:text-[21px] lg:leading-[1.5]">
+            <span className="t-label text-ink transition-colors duration-200 group-hover:text-purple lg:text-[21px] lg:leading-[1.5]">
               <span className="lg:hidden">{short(prev)}</span>
               <span className="hidden lg:inline">{t(prev.title, locale)}</span>
             </span>
           </span>
         </Link>
 
-        <Link href={href(locale, "/work")} className="t-label hidden shrink-0 text-purple hover:text-purple-deep lg:block">
+        <Link href={href(locale, "/work")} className="t-label hidden shrink-0 text-purple transition-colors duration-200 hover:text-purple-deep lg:block">
           {t(L.all, locale)}
         </Link>
 
@@ -45,13 +45,13 @@ export function ProjectPager({ slug, locale }: { slug: string; locale: Locale })
               <span className="lg:hidden">{t(L.nextShort, locale)}</span>
               <span className="hidden lg:inline">{t(L.next, locale)}</span>
             </span>
-            <span className="t-label text-ink group-hover:text-purple lg:text-[21px] lg:leading-[1.5]">
+            <span className="t-label text-ink transition-colors duration-200 group-hover:text-purple lg:text-[21px] lg:leading-[1.5]">
               <span className="lg:hidden">{short(next)}</span>
               <span className="hidden lg:inline">{t(next.title, locale)}</span>
             </span>
           </span>
           <span className="flex rounded-full bg-purple p-[10px] text-white transition-colors group-hover:bg-purple-deep lg:p-3.5">
-            <Icon name="arrow-left" size={20} className="size-4 lg:size-5" />
+            <Icon name="arrow-left" size={20} className="nudge size-4 lg:size-5" />
           </span>
         </Link>
       </div>

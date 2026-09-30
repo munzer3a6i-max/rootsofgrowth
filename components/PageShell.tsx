@@ -1,11 +1,15 @@
-import type { ReactNode } from "react";
+import { ViewTransition, type ReactNode } from "react";
 import type { Locale } from "@/lib/i18n";
 import type { NavKey } from "@/content/site";
 import { AnnouncementBar, Header } from "./Header";
 import { CtaBand } from "./CtaBand";
 import { Footer } from "./Footer";
 
-/** Announcement bar + nav, page content, CTA band + footer. */
+/**
+ * Announcement bar + nav, page content, CTA band + footer.
+ * Navigations crossfade the page body (a short rise in) via <ViewTransition>;
+ * the header is its own named layer so it stays anchored.
+ */
 export function PageShell({
   locale,
   active,
@@ -26,11 +30,17 @@ export function PageShell({
       >
         {locale === "ar" ? "تخطَّ إلى المحتوى" : "Skip to content"}
       </a>
-      <AnnouncementBar locale={locale} />
-      <Header locale={locale} active={active} />
-      <main id="main">{children}</main>
-      {cta && <CtaBand locale={locale} />}
-      <Footer locale={locale} />
+      <div style={{ viewTransitionName: "site-header" }}>
+        <AnnouncementBar locale={locale} />
+        <Header locale={locale} active={active} />
+      </div>
+      <ViewTransition enter="page" exit="page" default="none">
+        <div>
+          <main id="main">{children}</main>
+          {cta && <CtaBand locale={locale} />}
+          <Footer locale={locale} />
+        </div>
+      </ViewTransition>
     </>
   );
 }
