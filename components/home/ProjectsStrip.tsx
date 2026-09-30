@@ -32,7 +32,7 @@ export function ProjectsStrip({ locale }: { locale: Locale }) {
           {names.map((n, i) => (
             <Fragment key={n}>
               {i > 0 && <li aria-hidden="true">{star}</li>}
-              <li className={itemClass}>{n}</li>
+              <li className={`${itemClass} whitespace-normal! text-center`}>{n}</li>
             </Fragment>
           ))}
         </ul>
