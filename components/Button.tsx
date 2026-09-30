@@ -44,7 +44,7 @@ export function Button({
   );
   if (external) {
     return (
-      <a href={href} className={buttonClasses(variant, className)}>
+      <a href={href} target={rest.target} rel={rest.rel} className={buttonClasses(variant, className)}>
         {inner}
       </a>
     );
