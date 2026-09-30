@@ -1,18 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Alexandria, DM_Serif_Display } from "next/font/google";
+import { DM_Serif_Display } from "next/font/google";
+import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { dirOf, isLocale, locales } from "@/lib/i18n";
 import { siteUrl } from "@/lib/metadata";
 import { site } from "@/content/site";
 import "../globals.css";
 
-const alexandria = Alexandria({
-  subsets: ["arabic", "latin"],
-  weight: ["300", "400", "500", "700"],
-  variable: "--font-alexandria",
+/**
+ * Thmanyah Sans — the typeface of the Figma design. The files live outside
+ * /public on purpose: next/font compiles them into the build (hashed,
+ * packaged assets) instead of serving them as downloadable font files,
+ * as the Thmanyah font licence requires. Only the weights the design uses.
+ */
+const thmanyah = localFont({
+  src: [
+    { path: "../../fonts/thmanyah-sans/thmanyahsans-Light.otf", weight: "300", style: "normal" },
+    { path: "../../fonts/thmanyah-sans/thmanyahsans-Regular.otf", weight: "400", style: "normal" },
+    { path: "../../fonts/thmanyah-sans/thmanyahsans-Medium.otf", weight: "500", style: "normal" },
+    { path: "../../fonts/thmanyah-sans/thmanyahsans-Bold.otf", weight: "700", style: "normal" },
+  ],
+  variable: "--font-thmanyah",
   display: "swap",
-  // Fallback only — Thmanyah Sans (self-hosted, see app/globals.css) is the primary face.
-  preload: false,
+  fallback: ["system-ui", "Tahoma", "sans-serif"],
 });
 
 const dmSerif = DM_Serif_Display({
@@ -47,7 +57,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   if (!isLocale(locale)) notFound();
 
   return (
-    <html lang={locale} dir={dirOf(locale)} className={`${alexandria.variable} ${dmSerif.variable}`}>
+    <html lang={locale} dir={dirOf(locale)} className={`${thmanyah.variable} ${dmSerif.variable}`}>
       <body>{children}</body>
     </html>
   );

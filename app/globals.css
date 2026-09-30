@@ -4,60 +4,9 @@
  * Design tokens — mirrored from the Figma "🎨 Design System" page.
  * Colours map 1:1 to the Figma variables (Brand/*, Neutral/*, Text/*).
  * Typography: "Thmanyah Sans" (Light 300, Regular 400, Medium 500, Bold 700)
- * exactly as in Figma, self-hosted from /public/fonts/thmanyah-sans/
- * (see the README there). Alexandria stays as the fallback so the site still
- * renders correctly if the font files are missing.
+ * exactly as in Figma, compiled into the build with next/font/local from
+ * fonts/thmanyah-sans/ (see app/[locale]/layout.tsx and the README there).
  */
-@font-face {
-  font-family: "Thmanyah Sans";
-  src:
-    url("/fonts/thmanyah-sans/thmanyah-sans-Light.woff2") format("woff2"),
-    url("/fonts/thmanyah-sans/thmanyahsans-Light.otf") format("opentype"),
-    url("/fonts/thmanyah-sans/thmanyah-sans-Light.otf") format("opentype");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Thmanyah Sans";
-  src:
-    url("/fonts/thmanyah-sans/thmanyah-sans-Regular.woff2") format("woff2"),
-    url("/fonts/thmanyah-sans/thmanyahsans-Regular.otf") format("opentype"),
-    url("/fonts/thmanyah-sans/thmanyah-sans-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Thmanyah Sans";
-  src:
-    url("/fonts/thmanyah-sans/thmanyah-sans-Medium.woff2") format("woff2"),
-    url("/fonts/thmanyah-sans/thmanyahsans-Medium.otf") format("opentype"),
-    url("/fonts/thmanyah-sans/thmanyah-sans-Medium.otf") format("opentype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Thmanyah Sans";
-  src:
-    url("/fonts/thmanyah-sans/thmanyah-sans-Bold.woff2") format("woff2"),
-    url("/fonts/thmanyah-sans/thmanyahsans-Bold.otf") format("opentype"),
-    url("/fonts/thmanyah-sans/thmanyah-sans-Bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Thmanyah Sans";
-  src:
-    url("/fonts/thmanyah-sans/thmanyah-sans-Black.woff2") format("woff2"),
-    url("/fonts/thmanyah-sans/thmanyahsans-Black.otf") format("opentype"),
-    url("/fonts/thmanyah-sans/thmanyah-sans-Black.otf") format("opentype");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
 
 @theme {
   --color-purple: #5e4dc1;
@@ -71,7 +20,7 @@
   --color-muted: #6b6780;
   --color-on-dark-muted: #a9a5bd;
 
-  --font-sans: "Thmanyah Sans", var(--font-alexandria), "Alexandria", system-ui, sans-serif;
+  --font-sans: var(--font-thmanyah), system-ui, sans-serif;
   --font-serif: var(--font-dm-serif), "DM Serif Display", Georgia, serif;
 
   --breakpoint-xs: 30rem;

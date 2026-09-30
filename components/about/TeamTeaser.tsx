@@ -15,7 +15,7 @@ export function TeamTeaser({ locale }: { locale: Locale }) {
           eyebrow={t(c.eyebrow, locale)}
           title={t(c.title, locale)}
           lead={t(c.lead, locale)}
-          titleWidth="lg:max-w-[720px]"
+          titleWidth="lg:max-w-[640px]"
           aside={
             <div className="hidden shrink-0 lg:block">
               <Button href={href(locale, "/team#careers")} variant="outlineLight">

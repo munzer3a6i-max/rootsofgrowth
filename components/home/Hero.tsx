@@ -27,7 +27,7 @@ export function Hero({ locale }: { locale: Locale }) {
 
       <div className="container-site relative flex flex-col gap-6 pt-10 pb-14 lg:min-h-[800px] lg:flex-row lg:items-start lg:justify-between lg:gap-10 lg:pt-[70px] lg:pb-[70px]">
         {/* ——— Copy ——— */}
-        <div className="contents lg:flex lg:max-w-[720px] lg:flex-1 lg:flex-col lg:items-start lg:gap-[30px] lg:pt-10">
+        <div className="contents lg:flex lg:max-w-[660px] lg:flex-1 lg:flex-col lg:items-start lg:gap-[30px] lg:pt-10">
           <p className="inline-flex items-center gap-2 self-start rounded-full border border-lilac/40 px-[14px] py-2 text-[12px] leading-[1.4] font-medium text-lilac lg:gap-[10px] lg:px-[18px] lg:py-[10px] lg:text-[14px]">
             <Icon name="sparkle" size={16} className="size-[14px] lg:size-4" />
             <span className="lg:hidden">{t(c.chipMobile, locale)}</span>

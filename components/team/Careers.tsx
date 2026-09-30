@@ -15,7 +15,7 @@ export function Careers({ locale }: { locale: Locale }) {
       <div className="container-site py-16 lg:py-[110px]">
         <div className="relative flex flex-col gap-3 overflow-hidden rounded-[24px] bg-white p-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:rounded-[32px] lg:px-14 lg:py-[52px]">
           <Mark variant="purple" size={300} className="absolute top-10 -end-10 hidden opacity-[0.06] lg:block" />
-          <div className="relative flex flex-col items-start gap-3 lg:max-w-[780px] lg:gap-[14px]">
+          <div className="relative flex flex-col items-start gap-3 lg:max-w-[640px] lg:gap-[14px]">
             <EyebrowR>{t(c.eyebrow, locale)}</EyebrowR>
             <h2 className="text-[22px] leading-[1.45] font-medium text-ink lg:text-[46px] lg:leading-[1.5] lg:font-bold">
               {t(c.title, locale)}
