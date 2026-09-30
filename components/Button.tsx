@@ -1,0 +1,72 @@
+import Link from "next/link";
+import type { ComponentProps, ReactNode } from "react";
+import { Icon, type IconName } from "./Icon";
+
+/**
+ * Pill button — Figma "Button" component (Variant = Primary / Light /
+ * Outline on Dark / Outline on Light). Label first, arrow after it
+ * (on the left in RTL, on the right in LTR).
+ */
+export type ButtonVariant = "primary" | "light" | "outlineDark" | "outlineLight";
+
+const variants: Record<ButtonVariant, string> = {
+  primary: "bg-purple text-white hover:bg-purple-deep",
+  light: "bg-white text-ink hover:bg-lilac-soft",
+  outlineDark: "border-[1.5px] border-white text-white hover:bg-white/10",
+  outlineLight: "border-[1.5px] border-ink text-ink hover:bg-ink hover:text-white",
+};
+
+export function buttonClasses(variant: ButtonVariant = "primary", extra = "") {
+  return `t-button inline-flex items-center justify-center gap-[10px] rounded-full px-7 py-4 whitespace-nowrap transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed ${variants[variant]} ${extra}`;
+}
+
+type Common = {
+  variant?: ButtonVariant;
+  icon?: IconName | false;
+  children: ReactNode;
+  className?: string;
+};
+
+export function Button({
+  href,
+  variant = "primary",
+  icon = "arrow-left",
+  children,
+  className = "",
+  ...rest
+}: Common & { href: string } & Omit<ComponentProps<typeof Link>, "href" | "className" | "children">) {
+  const external = /^(https?:|mailto:|tel:)/.test(href);
+  const inner = (
+    <>
+      <span>{children}</span>
+      {icon && <Icon name={icon} size={20} />}
+    </>
+  );
+  if (external) {
+    return (
+      <a href={href} className={buttonClasses(variant, className)}>
+        {inner}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={buttonClasses(variant, className)} {...rest}>
+      {inner}
+    </Link>
+  );
+}
+
+export function SubmitButton({
+  variant = "primary",
+  icon = "arrow-left",
+  children,
+  className = "",
+  ...rest
+}: Common & Omit<ComponentProps<"button">, "className" | "children">) {
+  return (
+    <button className={buttonClasses(variant, className)} {...rest}>
+      <span>{children}</span>
+      {icon && <Icon name={icon} size={20} />}
+    </button>
+  );
+}
