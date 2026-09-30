@@ -25,7 +25,8 @@ export function PageShell({
 }) {
   return (
     <>
-      <div style={{ viewTransitionName: "site-header" }}>
+      {/* Own stacking layer (view-transition-name), so keep it above the page — the mobile menu lives inside. */}
+      <div className="relative z-40" style={{ viewTransitionName: "site-header" }}>
         <AnnouncementBar locale={locale} />
         <Header locale={locale} active={active} />
       </div>

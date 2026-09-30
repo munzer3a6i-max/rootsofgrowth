@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Serif_Display } from "next/font/google";
+import { DM_Serif_Display, Google_Sans_Flex } from "next/font/google";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import { dirOf, isLocale, locales } from "@/lib/i18n";
@@ -25,6 +25,14 @@ const thmanyah = localFont({
   variable: "--font-thmanyah",
   display: "swap",
   fallback: ["system-ui", "Tahoma", "sans-serif"],
+});
+
+/** English body text (Arabic keeps Thmanyah Sans). Not preloaded: only /en pages use it. */
+const googleSansFlex = Google_Sans_Flex({
+  subsets: ["latin"],
+  variable: "--font-gsflex",
+  display: "swap",
+  preload: false,
 });
 
 const dmSerif = DM_Serif_Display({
@@ -59,7 +67,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   if (!isLocale(locale)) notFound();
 
   return (
-    <html lang={locale} dir={dirOf(locale)} className={`${thmanyah.variable} ${dmSerif.variable}`}>
+    <html lang={locale} dir={dirOf(locale)} className={`${thmanyah.variable} ${dmSerif.variable} ${googleSansFlex.variable}`}>
       <body>
         {/* Skip link lives here (not in each page) so the first element of every
             page is the header — Next's post-navigation scroll check relies on it. */}

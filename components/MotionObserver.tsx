@@ -14,6 +14,22 @@ import { useEffect } from "react";
 export function MotionObserver() {
   const pathname = usePathname();
 
+  // Mark the document once the visitor navigates inside the site (link click
+  // or back/forward), so load-time entrances don't replay under the page curtain.
+  useEffect(() => {
+    const mark = () => document.documentElement.setAttribute("data-navigated", "");
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as Element | null)?.closest?.("a[href]");
+      if (a && a.getAttribute("href")?.startsWith("/")) mark();
+    };
+    document.addEventListener("click", onClick, true);
+    window.addEventListener("popstate", mark);
+    return () => {
+      document.removeEventListener("click", onClick, true);
+      window.removeEventListener("popstate", mark);
+    };
+  }, []);
+
   useEffect(() => {
     const vh = window.innerHeight;
     const reveal = new IntersectionObserver(

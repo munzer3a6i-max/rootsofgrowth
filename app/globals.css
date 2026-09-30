@@ -158,6 +158,31 @@
   }
 }
 
+/* ───────── English typography ─────────
+ * /en uses Google Sans Flex for text and DM Serif Display for headings
+ * (Arabic stays on Thmanyah Sans). Unlayered so it overrides per-element
+ * leading/weight utilities written for the Arabic scale. DM Serif has a
+ * single weight, so headings are set at 400 with no faux bold. */
+html:lang(en) {
+  --font-sans: var(--font-gsflex), var(--font-thmanyah), system-ui, sans-serif;
+}
+html:lang(en) :is(h1, h2, h3, .t-display, .t-h1, .t-h2) {
+  font-family: var(--font-dm-serif), var(--font-thmanyah), Georgia, serif;
+  font-weight: 400;
+  font-synthesis-weight: none;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+html:lang(en) :is(h1, .t-display, .t-h1) {
+  line-height: 1.08;
+}
+html:lang(en) :is(h2, .t-h2) {
+  line-height: 1.12;
+}
+html:lang(en) h3 {
+  line-height: 1.2;
+}
+
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
@@ -512,7 +537,14 @@ html:active-view-transition-type(morph)::view-transition-new(.page) {
   }
 }
 
-/* ───────── Home hero — the one authored entrance ─────────
+/* Entrances play on a fresh load only. After the first in-app navigation
+ * (MotionObserver sets html[data-navigated]) the curtain carries the change,
+ * so pages arrive complete instead of replaying under the snapshot. */
+html[data-navigated] :is(.hero-arch, .hero-arch img, .hero-line, .hero-fade, .hero-badge) {
+  animation: none;
+}
+
+/* ───────── Hero entrances (Home hero + inner page headers) ─────────
  * "Roots growing": the arch photo unmasks upward from the ground line, the
  * headline lines rise out of their own line box, the mark badge settles last.
  * Plays once on load (CSS, off the main thread). */

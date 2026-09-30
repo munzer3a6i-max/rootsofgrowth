@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ViewTransition } from "react";
+import { ViewTransition, type CSSProperties } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import type { Project } from "@/content/projects";
 import { projectDetailLabels as L } from "@/content/project-detail";
@@ -21,7 +21,7 @@ export function ProjectHero({ project, locale }: { project: Project; locale: Loc
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-linear-to-b from-ink/10 from-20% to-ink/96 lg:to-ink/95" />
 
       <div className="container-site pb-6 lg:pb-[121px]">
-        <div className="flex max-w-[900px] flex-col items-start gap-3 lg:gap-5">
+        <div style={{ "--i": 0 } as CSSProperties} className="hero-fade flex max-w-[900px] flex-col items-start gap-3 lg:gap-5">
           <div className="hidden lg:block">
             <Breadcrumb
               locale={locale}
@@ -39,7 +39,7 @@ export function ProjectHero({ project, locale }: { project: Project; locale: Loc
               </span>
             )}
           </div>
-          <h1 className="t-display">{t(project.title, locale)}</h1>
+          <h1 style={{ "--i": 0 } as CSSProperties} className="hero-line t-display">{t(project.title, locale)}</h1>
           <p
             lang={other}
             dir={other === "ar" ? "rtl" : "ltr"}

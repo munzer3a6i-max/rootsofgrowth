@@ -36,6 +36,8 @@ React `<ViewTransition enter="page" exit="page">`.
   (Work/Team filters) so they skip the curtain.
 - Photo-morph links pass `transitionTypes={["morph"]}` to `<Link>`; both ends wrap the photo in
   `<ViewTransition name="project-<slug>" share="morph" default="none">` (unique names per page).
+- Hero/page-header entrances (`hero-*` utilities) play on a fresh load only; after the first
+  in-app navigation `html[data-navigated]` disables them so pages arrive complete.
 - Reduced motion: plain crossfade, no curtain. No View Transitions support: the page fades/rises in.
 - Keep the header as the first element of each page (the skip link lives in the layout), or
   Next's post-navigation scroll will land below the header.

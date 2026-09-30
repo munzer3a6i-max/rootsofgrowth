@@ -99,8 +99,9 @@ with one of the same name to swap a photo. Logos/marks are in `public/brand/`.
 Colours, type scale and spacing from the Figma Design System are defined once in
 `app/globals.css` (`@theme` + `t-*` typography utilities).
 
-**Fonts:** as in Figma — **Thmanyah Sans** (Light / Regular / Medium / Bold) for all text and
-**DM Serif Display** for Latin accents and big numerals. The Thmanyah files are in
+**Fonts:** Arabic (as in Figma) — **Thmanyah Sans** (Light / Regular / Medium / Bold), with
+**DM Serif Display** for Latin accents and big numerals. English — **DM Serif Display** for
+headings and **Google Sans Flex** for body text (see "English typography" in `app/globals.css`). The Thmanyah files are in
 `fonts/thmanyah-sans/` (outside `public/`) and compiled into the build by `next/font/local`.
 Their licence forbids uploading/hosting the font files where they can be downloaded, so keep this
 repository **private** — see `fonts/thmanyah-sans/README.md`.
