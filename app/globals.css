@@ -3,10 +3,62 @@
 /*
  * Design tokens — mirrored from the Figma "🎨 Design System" page.
  * Colours map 1:1 to the Figma variables (Brand/*, Neutral/*, Text/*).
- * Fonts: the Figma file uses "Thmanyah Sans", whose licence does not allow
- * self-hosting on a website, so Alexandria (listed in the design system,
- * SIL OFL) is used. To swap fonts, change --font-sans below / in layout.tsx.
+ * Typography: "Thmanyah Sans" (Light 300, Regular 400, Medium 500, Bold 700)
+ * exactly as in Figma, self-hosted from /public/fonts/thmanyah-sans/
+ * (see the README there). Alexandria stays as the fallback so the site still
+ * renders correctly if the font files are missing.
  */
+@font-face {
+  font-family: "Thmanyah Sans";
+  src:
+    url("/fonts/thmanyah-sans/thmanyah-sans-Light.woff2") format("woff2"),
+    url("/fonts/thmanyah-sans/thmanyahsans-Light.otf") format("opentype"),
+    url("/fonts/thmanyah-sans/thmanyah-sans-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src:
+    url("/fonts/thmanyah-sans/thmanyah-sans-Regular.woff2") format("woff2"),
+    url("/fonts/thmanyah-sans/thmanyahsans-Regular.otf") format("opentype"),
+    url("/fonts/thmanyah-sans/thmanyah-sans-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src:
+    url("/fonts/thmanyah-sans/thmanyah-sans-Medium.woff2") format("woff2"),
+    url("/fonts/thmanyah-sans/thmanyahsans-Medium.otf") format("opentype"),
+    url("/fonts/thmanyah-sans/thmanyah-sans-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src:
+    url("/fonts/thmanyah-sans/thmanyah-sans-Bold.woff2") format("woff2"),
+    url("/fonts/thmanyah-sans/thmanyahsans-Bold.otf") format("opentype"),
+    url("/fonts/thmanyah-sans/thmanyah-sans-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Thmanyah Sans";
+  src:
+    url("/fonts/thmanyah-sans/thmanyah-sans-Black.woff2") format("woff2"),
+    url("/fonts/thmanyah-sans/thmanyahsans-Black.otf") format("opentype"),
+    url("/fonts/thmanyah-sans/thmanyah-sans-Black.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-purple: #5e4dc1;
   --color-purple-deep: #4535a3;
@@ -19,7 +71,7 @@
   --color-muted: #6b6780;
   --color-on-dark-muted: #a9a5bd;
 
-  --font-sans: var(--font-alexandria), "Alexandria", system-ui, sans-serif;
+  --font-sans: "Thmanyah Sans", var(--font-alexandria), "Alexandria", system-ui, sans-serif;
   --font-serif: var(--font-dm-serif), "DM Serif Display", Georgia, serif;
 
   --breakpoint-xs: 30rem;
@@ -57,7 +109,7 @@
   }
 }
 @utility t-h3 {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 22px;
   line-height: 1.45;
   @media (width >= 64rem) {
@@ -66,7 +118,7 @@
   }
 }
 @utility t-h4 {
-  font-weight: 600;
+  font-weight: 500;
   font-size: 19px;
   line-height: 1.5;
   @media (width >= 64rem) {
@@ -106,8 +158,10 @@
   font-size: 16px;
   line-height: 1.2;
 }
+/* Figma stats/big numerals use DM Serif Display Regular. */
 @utility t-stat {
-  font-weight: 800;
+  font-family: var(--font-serif);
+  font-weight: 400;
   font-size: 44px;
   line-height: 1.1;
   @media (width >= 64rem) {

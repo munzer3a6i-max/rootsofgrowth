@@ -37,7 +37,7 @@ function Band({ words, locale, className }: { words: L[]; locale: Locale; classN
             {half.map((w, i) => (
               <li key={i} className={`flex items-center gap-5 lg:gap-[34px] ${locale === "ar" ? "flex-row-reverse" : ""}`}>
                 <Icon name="sparkle" size={22} className="size-4 text-lilac lg:size-[22px]" />
-                <span className="text-[20px] leading-[1.45] font-semibold whitespace-nowrap text-white lg:text-[30px] lg:font-medium">
+                <span className="text-[20px] leading-[1.45] font-medium whitespace-nowrap text-white lg:text-[30px]">
                   {t(w, locale)}
                 </span>
               </li>

@@ -18,6 +18,8 @@ cp .env.example .env.local     # fill in SMTP settings to test the form
 npm run dev                    # http://localhost:3000  (redirects to /ar)
 ```
 
+> **Before deploying:** add the Thmanyah Sans font files — see *Fonts* below.
+
 Production check:
 
 ```bash
@@ -99,11 +101,12 @@ with one of the same name to swap a photo. Logos/marks are in `public/brand/`.
 Colours, type scale and spacing from the Figma Design System are defined once in
 `app/globals.css` (`@theme` + `t-*` typography utilities).
 
-**Font note:** the Figma file uses *Thmanyah Sans*, whose licence does not permit serving it
-from your own website. The site uses **Alexandria** (the family listed in the design system,
-open licence via Google Fonts) and **DM Serif Display** for Latin accents. If you obtain a web
-licence for Thmanyah, add the font files and switch `--font-sans` in `app/globals.css` /
-`app/[locale]/layout.tsx`.
+**Fonts:** as in Figma — **Thmanyah Sans** (Light / Regular / Medium / Bold) for all text and
+**DM Serif Display** for Latin accents and big numerals. Thmanyah Sans is self-hosted from
+`public/fonts/thmanyah-sans/`: download it from the official site (https://font.thmanyah.com),
+check its licence, and drop the files there using the names listed in
+`public/fonts/thmanyah-sans/README.md`. Until the files are added the site falls back to
+Alexandria automatically.
 
 ---
 

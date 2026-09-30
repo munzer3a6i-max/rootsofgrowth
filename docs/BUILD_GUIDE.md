@@ -18,7 +18,7 @@ All pages live under `app/[locale]/…` with `locale` = `ar` (RTL, primary) | `e
 4. Figma asset URLs (figma.com/api/mcp/asset/…) are **blocked** in this sandbox and must never appear in code. All photos are already in `public/images/` (see list below). Brand: `components/Brand.tsx` (`<Logo variant>`, `<Mark variant size>`). Icons: `components/Icon.tsx` (`<Icon name size className>`, colour via `text-*`, arrows auto-mirror in LTR).
 5. Translate Figma's absolute positioning into real responsive layout (flex/grid). Desktop design = 1440 wide (content 1240 + 100px gutters → use `container-site`). Mobile design = 390 wide (20px gutters). Use `lg:` (1024px) as the desktop switch; make 768–1024 look sensible too.
 6. Do **not** run `next build` or start another dev server (they would clash). A dev server is already running at **http://localhost:3000** with hot reload. Type-check with `npx tsc --noEmit`.
-7. Figma font "thmanyah sans" → our default `font-sans` (Alexandria). Weights: Light 300, Regular 400, Medium 500, SemiBold 600, Bold 700, ExtraBold 800. "DM Serif Display" → `font-serif` / `t-serif-italic`.
+7. Figma font "thmanyah sans" → our default `font-sans` (Thmanyah Sans, self-hosted in `public/fonts/thmanyah-sans/`, Alexandria fallback). Weights: Light 300, Regular 400, Medium 500, Bold 700 (the design uses no SemiBold/ExtraBold). "DM Serif Display" → `font-serif` / `t-serif-italic`.
 
 ## Building blocks (import from `@/components/...`)
 - `PageShell` — wraps a page with announcement bar, nav (`active` = home/about/services/work/team/contact), CTA band, footer. `cta={false}` hides CTA band.

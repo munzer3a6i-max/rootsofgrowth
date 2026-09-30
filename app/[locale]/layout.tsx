@@ -8,9 +8,11 @@ import "../globals.css";
 
 const alexandria = Alexandria({
   subsets: ["arabic", "latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "700"],
   variable: "--font-alexandria",
   display: "swap",
+  // Fallback only — Thmanyah Sans (self-hosted, see app/globals.css) is the primary face.
+  preload: false,
 });
 
 const dmSerif = DM_Serif_Display({
