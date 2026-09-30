@@ -42,7 +42,7 @@ export function Header({ locale, active }: { locale: Locale; active?: NavKey }) 
         </Link>
 
         <nav aria-label="Main" className="hidden lg:block">
-          <ul className="flex items-center gap-7 xl:gap-9">
+          <ul className="flex items-center gap-5 xl:gap-9">
             {items.map((item) => {
               const isActive = item.key === active;
               return (
@@ -68,7 +68,7 @@ export function Header({ locale, active }: { locale: Locale; active?: NavKey }) 
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-5 lg:flex">
+        <div className="hidden items-center gap-3 lg:flex xl:gap-5">
           <LanguageSwitch locale={locale} />
           <Button href={href(locale, "/contact")}>{t(site.bookConsultation, locale)}</Button>
         </div>
