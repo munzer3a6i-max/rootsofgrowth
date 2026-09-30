@@ -9,15 +9,17 @@ import { Icon, type IconName } from "./Icon";
  */
 export type ButtonVariant = "primary" | "light" | "outlineDark" | "outlineLight";
 
+/* Hover: a fill (--sweep) slides in from the reading-start side and exits
+ * through the far side (the `btn-sweep` utility in app/globals.css). */
 const variants: Record<ButtonVariant, string> = {
-  primary: "bg-purple text-white hover:bg-purple-deep",
-  light: "bg-white text-ink hover:bg-lilac-soft",
-  outlineDark: "border-[1.5px] border-white text-white hover:bg-white/10",
-  outlineLight: "border-[1.5px] border-ink text-ink hover:bg-ink hover:text-white",
+  primary: "bg-purple text-white [--sweep:var(--color-lilac)] hover:text-ink",
+  light: "bg-white text-ink [--sweep:var(--color-ink)] hover:text-white",
+  outlineDark: "border-[1.5px] border-white text-white [--sweep:var(--color-white)] hover:text-ink",
+  outlineLight: "border-[1.5px] border-ink text-ink [--sweep:var(--color-ink)] hover:text-white",
 };
 
 export function buttonClasses(variant: ButtonVariant = "primary", extra = "") {
-  return `t-button inline-flex items-center justify-center gap-[10px] group press rounded-full px-7 py-4 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed ${variants[variant]} ${extra}`;
+  return `t-button inline-flex items-center justify-center gap-[10px] group press btn-sweep rounded-full px-7 py-4 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed ${variants[variant]} ${extra}`;
 }
 
 type Common = {

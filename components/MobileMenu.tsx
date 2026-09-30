@@ -78,6 +78,7 @@ export function MobileMenu({
           data-open={open}
           aria-label={labels.name}
           dir={locale === "ar" ? "rtl" : "ltr"}
+          data-lenis-prevent
           className="group/menu fixed inset-0 z-50 flex flex-col overflow-y-auto bg-ink px-5 pt-4 pb-8 text-white transition-[opacity,visibility] duration-200 ease-out data-[open=false]:invisible data-[open=false]:opacity-0 data-[open=true]:duration-300"
         >
           <Mark size={300} className="absolute -bottom-10 -end-20 opacity-5" />

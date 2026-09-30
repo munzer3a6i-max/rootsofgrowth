@@ -22,6 +22,17 @@ UI transitions stay 150–300ms. Never `transition-all`, never `ease-in`, never 
 Hover motion is automatically limited to fine pointers (Tailwind v4 `hover:` and the utilities
 above are gated). Reduced motion is handled inside each utility.
 
+## Smooth scroll, buttons, links
+- **Smooth scroll:** Lenis (`components/SmoothScroll.tsx`, lerp 0.085) eases wheel/trackpad
+  scrolling; touch stays native; reduced motion = 1:1. In-page `#anchor` links glide to the
+  target (24px offset). Scrollable panels need no work (`allowNestedScroll`); add
+  `data-lenis-prevent` to an overlay that must never smooth-scroll (the mobile menu has it).
+  Don't reintroduce `scroll-behavior: smooth` on html — it fights Lenis.
+- **Buttons:** `btn-sweep` (built into `buttonClasses`) — a `--sweep` fill slides in from the
+  reading-start edge on hover and leaves through the far edge (450ms). Set `--sweep` and the
+  hover text colour per variant.
+- **Text links:** `link-draw` draws an underline in from the reading-start edge (footer links).
+
 ## Rules for reveals
 - Never on the hero / `PageHeader` / anything above the fold.
 - Not on every paragraph: one heading block per section + the grid items. Skip small inline bits.

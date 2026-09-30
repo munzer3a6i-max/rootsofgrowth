@@ -57,7 +57,7 @@ export function Footer({ locale }: { locale: Locale }) {
     },
   ] as { title: string; links: { label: string; href?: string; ltr?: boolean }[] }[];
 
-  const linkClass = "t-body-s text-on-dark-muted transition-colors hover:text-white";
+  const linkClass = "t-body-s link-draw text-on-dark-muted hover:text-white";
   const renderLink = (l: { label: string; href?: string; ltr?: boolean }) =>
     l.href ? (
       l.href.startsWith("/") ? (

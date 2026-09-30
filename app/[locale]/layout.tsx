@@ -7,6 +7,8 @@ import { siteUrl } from "@/lib/metadata";
 import { site } from "@/content/site";
 import { MotionObserver } from "@/components/MotionObserver";
 import { PageCurtain } from "@/components/PageCurtain";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import "lenis/dist/lenis.css";
 import "../globals.css";
 
 /**
@@ -85,6 +87,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         {children}
         <MotionObserver />
         <PageCurtain />
+        <SmoothScroll />
         </div>
       </body>
     </html>
