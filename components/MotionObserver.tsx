@@ -28,14 +28,21 @@ export function MotionObserver() {
       },
       { rootMargin: "0px 0px -8% 0px" },
     );
+    const pending: HTMLElement[] = [];
     document.querySelectorAll<HTMLElement>("[data-reveal]:not([data-reveal-done])").forEach((el) => {
-      if (el.getBoundingClientRect().top > vh * 0.92) {
-        el.setAttribute("data-reveal-pending", "");
-        reveal.observe(el);
-      } else {
-        el.setAttribute("data-reveal-done", "");
-      }
+      if (el.getBoundingClientRect().top > vh * 0.92) pending.push(el);
+      else el.setAttribute("data-reveal-done", "");
     });
+    // Hide below-the-fold items instantly (no fade-out), then re-enable transitions.
+    for (const el of pending) {
+      el.style.transition = "none";
+      el.setAttribute("data-reveal-pending", "");
+    }
+    if (pending.length) void document.body.offsetHeight;
+    for (const el of pending) {
+      el.style.transition = "";
+      reveal.observe(el);
+    }
 
     const loops = new IntersectionObserver((entries) => {
       for (const e of entries) e.target.toggleAttribute("data-offscreen", !e.isIntersecting);

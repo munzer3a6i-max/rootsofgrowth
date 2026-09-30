@@ -37,6 +37,8 @@ export function DetailMain({
         {detail.included.map((item, i) => (
           <li
             key={i}
+            data-reveal
+            style={{ "--i": i } as React.CSSProperties}
             className="flex items-center gap-3 rounded-[18px] bg-white p-4 lg:items-start lg:gap-[14px] lg:rounded-[20px] lg:p-[22px]"
           >
             <span className="shrink-0 rounded-full bg-lilac-soft p-2 text-purple lg:p-[9px]">
@@ -55,7 +57,7 @@ export function DetailMain({
         {detail.stages.map((s, i) => {
           const last = i === detail.stages.length - 1;
           return (
-            <li key={i} className="flex items-start gap-[14px] lg:gap-5">
+            <li key={i} data-reveal style={{ "--i": i } as React.CSSProperties} className="flex items-start gap-[14px] lg:gap-5">
               <div className="flex shrink-0 flex-col items-center self-stretch">
                 <span
                   className={`flex size-[34px] items-center justify-center rounded-full border-2 border-purple font-serif text-[16px] leading-[1.1] tracking-[-0.5px] lg:size-10 lg:text-[18px] ${

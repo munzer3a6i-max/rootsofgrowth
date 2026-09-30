@@ -9,7 +9,7 @@ export function HowWeWork({ locale }: { locale: Locale }) {
   return (
     <section className="bg-ink py-16 text-white lg:py-[120px]">
       <div className="container-site flex flex-col gap-4 lg:gap-14">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+        <div data-reveal className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
           <div className="flex flex-col items-start gap-4 lg:gap-[22px]">
             <Eyebrow tone="dark">{t(c.eyebrow, locale)}</Eyebrow>
             <h2 className="t-h2 max-w-[640px]">
@@ -21,9 +21,11 @@ export function HowWeWork({ locale }: { locale: Locale }) {
         </div>
 
         <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          {c.steps.map((s) => (
+          {c.steps.map((s, i) => (
             <li
               key={s.number}
+              data-reveal
+              style={{ "--i": i } as React.CSSProperties}
               className="flex items-start gap-[14px] rounded-[20px] bg-ink-soft p-[18px] lg:flex-col lg:gap-[18px] lg:rounded-[24px] lg:p-[30px]"
             >
               <div className="flex shrink-0 items-center justify-between lg:w-full">

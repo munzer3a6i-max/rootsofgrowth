@@ -26,7 +26,7 @@ export function ContactAside({ locale }: { locale: Locale }) {
         </p>
         <ol className="relative flex flex-col gap-4 lg:gap-[22px]">
           {n.steps.map((step, i) => (
-            <li key={i} className="flex items-start gap-[14px] lg:gap-4">
+            <li key={i} data-reveal style={{ "--i": i } as React.CSSProperties} className="flex items-start gap-[14px] lg:gap-4">
               <span
                 aria-hidden="true"
                 className="font-serif flex size-[38px] shrink-0 items-center justify-center rounded-full bg-purple text-[18px] leading-[1.1] tracking-[-0.5px] text-white lg:size-11 lg:text-[20px]"
@@ -55,7 +55,7 @@ export function ContactAside({ locale }: { locale: Locale }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={s.label}
-                className="flex size-[42px] items-center justify-center rounded-full bg-lilac-soft text-purple transition-colors hover:bg-purple hover:text-white"
+                className="press flex size-[42px] items-center justify-center rounded-full bg-lilac-soft text-purple hover:bg-purple hover:text-white"
               >
                 <Icon name={s.name} size={18} />
               </a>

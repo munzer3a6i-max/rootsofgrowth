@@ -94,8 +94,11 @@ function readAsBase64(file: File): Promise<string> {
 }
 
 /* ───────── Field primitives ───────── */
+/** State feedback: messages/panels fade + rise in once when they mount (@starting-style). */
+const enterPanel = "transition-[opacity,translate] duration-300 ease-out starting:translate-y-2 starting:opacity-0 motion-reduce:starting:translate-y-0";
+const enterMsg = "transition-[opacity,translate] duration-200 ease-out starting:-translate-y-1 starting:opacity-0 motion-reduce:starting:translate-y-0";
 const inputBox =
-  "w-full rounded-[12px] border bg-canvas px-[14px] t-body-s text-ink placeholder:text-muted transition-colors outline-none focus:border-purple focus:ring-2 focus:ring-purple/15 lg:rounded-[14px] lg:px-[18px]";
+  "w-full rounded-[12px] border bg-canvas px-[14px] t-body-s text-ink placeholder:text-muted transition-[color,border-color,box-shadow] duration-150 ease-out outline-none focus:border-purple focus:ring-2 focus:ring-purple/15 lg:rounded-[14px] lg:px-[18px]";
 const borderOf = (err?: FieldError) => (err ? "border-red-500" : "border-line");
 
 function Field({
@@ -123,7 +126,7 @@ function Field({
       </label>
       {children}
       {error && (
-        <p id={`${id}-error`} className="-mt-0.5 text-[13px] leading-[1.5] text-red-600" role="alert">
+        <p id={`${id}-error`} className={`-mt-0.5 text-[13px] leading-[1.5] text-red-600 ${enterMsg}`} role="alert">
           {errorText(error, locale)}
         </p>
       )}
@@ -248,7 +251,7 @@ export function ContactForm({
   if (status === "success") {
     return (
       <div
-        className={`flex flex-col items-start gap-4 rounded-[24px] bg-white p-[22px] lg:gap-[22px] lg:rounded-[32px] lg:p-12 ${className}`}
+        className={`flex flex-col items-start gap-4 rounded-[24px] bg-white p-[22px] lg:gap-[22px] lg:rounded-[32px] lg:p-12 ${enterPanel} ${className}`}
       >
         <div
           ref={statusRef}
@@ -265,7 +268,7 @@ export function ContactForm({
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="t-label text-purple underline-offset-4 hover:underline"
+          className="press t-label text-purple underline-offset-4 hover:underline"
         >
           {t(c.success.again, locale)}
         </button>
@@ -343,7 +346,7 @@ export function ContactForm({
         <Field id={id("phone")} label={t(c.fields.phone.label, locale)} required error={errors.phone} locale={locale}>
           <div
             dir="ltr"
-            className={`relative flex h-[52px] items-center rounded-[12px] border bg-canvas transition-colors focus-within:border-purple focus-within:ring-2 focus-within:ring-purple/15 lg:h-14 lg:rounded-[14px] ${borderOf(errors.phone)}`}
+            className={`relative flex h-[52px] items-center rounded-[12px] border bg-canvas transition-[border-color,box-shadow] duration-150 ease-out focus-within:border-purple focus-within:ring-2 focus-within:ring-purple/15 lg:h-14 lg:rounded-[14px] ${borderOf(errors.phone)}`}
           >
             {/* The dialling code sits on the left in both languages (numbers read LTR). */}
             <span className="t-label flex shrink-0 items-center gap-2 ps-[14px] text-ink lg:ps-[18px]">
@@ -511,7 +514,7 @@ export function ContactForm({
             return (
               <label
                 key={b.value}
-                className={`t-label cursor-pointer rounded-full border px-4 py-[10px] transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-purple/40 ${
+                className={`press t-label cursor-pointer rounded-full border px-4 py-[10px] has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-purple/40 ${
                   checked ? "border-purple bg-purple text-white" : "border-line bg-canvas text-ink hover:border-purple/40"
                 }`}
               >
@@ -549,7 +552,7 @@ export function ContactForm({
       <div className={`${hideMobile} flex-col gap-2`}>
         <label
           htmlFor={id("attachment")}
-          className={`t-body-s flex cursor-pointer items-center justify-center gap-3 rounded-[14px] border border-dashed px-5 py-[18px] text-center text-muted transition-colors hover:border-purple/50 hover:text-ink has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-purple/40 ${
+          className={`t-body-s flex cursor-pointer items-center justify-center gap-3 rounded-[14px] border border-dashed px-5 py-[18px] text-center text-muted press hover:border-purple/50 hover:text-ink has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-purple/40 ${
             errors.attachment ? "border-red-500" : "border-line"
           }`}
         >
@@ -576,20 +579,20 @@ export function ContactForm({
               if (fileRef.current) fileRef.current.value = "";
               setErrors((er) => ({ ...er, attachment: undefined }));
             }}
-            className="t-body-s self-start text-purple underline-offset-4 hover:underline"
+            className="press t-body-s self-start text-purple underline-offset-4 hover:underline"
           >
             {t(c.fields.attachment.remove, locale)}
           </button>
         )}
         {errors.attachment && (
-          <p className="text-[13px] leading-[1.5] text-red-600" role="alert">
+          <p className={`text-[13px] leading-[1.5] text-red-600 ${enterMsg}`} role="alert">
             {errorText(errors.attachment, locale)}
           </p>
         )}
       </div>
 
       {serverError && (
-        <div role="alert" className="t-body-s rounded-[14px] border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+        <div role="alert" className={`t-body-s rounded-[14px] border border-red-200 bg-red-50 px-4 py-3 text-red-700 ${enterPanel}`}>
           {t(c.errors[serverError], locale)}
           {serverError === "server" && (
             <>
@@ -603,8 +606,24 @@ export function ContactForm({
       )}
 
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-        <SubmitButton type="submit" disabled={status === "sending"} className="w-full lg:w-auto">
-          {status === "sending" ? t(c.sending, locale) : t(c.submit, locale)}
+        <SubmitButton
+          type="submit"
+          disabled={status === "sending"}
+          icon={status === "sending" ? false : "arrow-left"}
+          className="w-full lg:w-auto"
+        >
+          {status === "sending" ? (
+            <span className="inline-flex items-center gap-[10px]">
+              {t(c.sending, locale)}
+              {/* Spinner takes the arrow's slot; under reduced motion it pulses instead of spinning. */}
+              <span
+                aria-hidden="true"
+                className="size-5 animate-spin rounded-full border-2 border-current border-t-transparent motion-reduce:animate-pulse"
+              />
+            </span>
+          ) : (
+            t(c.submit, locale)
+          )}
         </SubmitButton>
         <p className="t-body-s hidden text-muted lg:block">{t(c.privacy, locale)}</p>
       </div>

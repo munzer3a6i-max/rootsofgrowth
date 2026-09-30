@@ -237,10 +237,15 @@
  */
 
 /* Press feedback for pressable things. */
+/* press + lift share one transition list so they can sit on the same element. */
 @utility press {
-  transition-property: transform, background-color, border-color, color, box-shadow;
-  transition-duration: 160ms;
-  transition-timing-function: var(--ease-out);
+  transition:
+    transform 160ms var(--ease-out),
+    translate 250ms var(--ease-out),
+    box-shadow 250ms var(--ease-out),
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
   &:active {
     transform: scale(0.97);
   }
@@ -283,8 +288,12 @@
 /* Card lift on hover — tiny, since cards are seen tens of times per visit. */
 @utility lift {
   transition:
+    transform 160ms var(--ease-out),
     translate 250ms var(--ease-out),
-    box-shadow 250ms var(--ease-out);
+    box-shadow 250ms var(--ease-out),
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
   &:where(.group:hover, :hover) {
     @media (hover: hover) and (pointer: fine) {
       translate: 0 -3px;

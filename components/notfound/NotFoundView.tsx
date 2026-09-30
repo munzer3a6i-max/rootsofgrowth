@@ -16,6 +16,12 @@ export function useLocaleFromPath(): Locale {
   return isLocale(first) ? first : defaultLocale;
 }
 
+const numeral = "font-serif text-[120px] leading-[1.1] tracking-[-0.5px] lg:text-[220px]";
+/** Rare page, small delight: the 4·mark·4 settles in once on arrival (@starting-style).
+ *  Reduced motion keeps only the fade. */
+const arrive =
+  "transition-[opacity,translate,scale] duration-700 ease-out starting:translate-y-4 starting:opacity-0 motion-reduce:starting:translate-y-0";
+
 /** 404 section (Figma 35:1721 / mobile 40:2333). */
 export function NotFoundSection({ locale }: { locale: Locale }) {
   return (
@@ -26,16 +32,16 @@ export function NotFoundSection({ locale }: { locale: Locale }) {
       />
       <div className="container-site relative flex flex-col items-center gap-[22px] py-[90px] text-center lg:gap-[30px] lg:py-[130px]">
         <p className="flex items-center gap-[10px] lg:gap-[18px]" dir="ltr" aria-label="404">
-          <span aria-hidden="true" className="font-serif text-[120px] leading-[1.1] tracking-[-0.5px] lg:text-[220px]">
+          <span aria-hidden="true" className={`${numeral} ${arrive}`}>
             4
           </span>
           <span
             aria-hidden="true"
-            className="flex size-[110px] items-center justify-center rounded-full bg-purple lg:size-[200px]"
+            className={`flex size-[110px] items-center justify-center rounded-full bg-purple delay-[80ms] starting:scale-[0.92] motion-reduce:starting:scale-100 lg:size-[200px] ${arrive}`}
           >
             <Mark size={110} className="h-auto w-[60px] lg:w-[110px]" />
           </span>
-          <span aria-hidden="true" className="font-serif text-[120px] leading-[1.1] tracking-[-0.5px] lg:text-[220px]">
+          <span aria-hidden="true" className={`${numeral} delay-[160ms] ${arrive}`}>
             4
           </span>
         </p>
@@ -63,10 +69,10 @@ export function NotFoundSection({ locale }: { locale: Locale }) {
               <li key={l.path}>
                 <Link
                   href={href(locale, l.path)}
-                  className="t-label inline-flex items-center gap-[6px] text-lilac hover:text-white"
+                  className="group press t-label inline-flex items-center gap-[6px] text-lilac hover:text-white"
                 >
                   <span>{t(l.label, locale)}</span>
-                  <Icon name="arrow-left" size={14} />
+                  <Icon name="arrow-left" size={14} className="nudge" />
                 </Link>
               </li>
             ))}

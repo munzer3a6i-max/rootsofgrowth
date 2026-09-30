@@ -13,7 +13,7 @@ export function ServicesList({ locale }: { locale: Locale }) {
   return (
     <section className="bg-canvas py-16 lg:py-[110px]">
       <div className="container-site flex flex-col gap-4 lg:gap-8">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+        <div data-reveal className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
           <div className="flex flex-col items-start gap-4 lg:gap-[22px]">
             <Eyebrow>{t(c.eyebrow, locale)}</Eyebrow>
             <h2 className="t-h2 text-ink">{t(c.title, locale)}</h2>
@@ -23,7 +23,15 @@ export function ServicesList({ locale }: { locale: Locale }) {
 
         <ul className="flex flex-col gap-4 lg:gap-8">
           {services.map((s, i) => (
-            <li key={s.slug} id={s.slug} className="scroll-mt-28">
+            <li
+              key={s.slug}
+              id={s.slug}
+              data-reveal
+              // Stacked full-width blocks enter one at a time as they scroll in, so
+              // only the first two (which can share the viewport) get a stagger step.
+              style={{ "--i": Math.min(i, 1) } as React.CSSProperties}
+              className="scroll-mt-28"
+            >
               <ServiceBlock locale={locale} service={s} alt={i % 2 === 1} priority={i === 0} />
             </li>
           ))}
@@ -104,9 +112,9 @@ function ServiceBlock({
           </Button>
         </div>
 
-        <Link href={detail} className="t-label flex items-center gap-1.5 text-purple lg:hidden">
+        <Link href={detail} className="group press t-label flex items-center gap-1.5 text-purple lg:hidden">
           <span>{t(c.details, locale)}</span>
-          <Icon name="arrow-left" size={16} />
+          <Icon name="arrow-left" size={16} className="nudge" />
         </Link>
       </div>
     </article>

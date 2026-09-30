@@ -11,7 +11,7 @@ export function QuickLinks({ locale }: { locale: Locale }) {
           <li key={s.slug}>
             <a
               href={`#${s.slug}`}
-              className="flex items-center gap-2 rounded-full border border-line px-4 py-[9px] text-[15px] transition-colors hover:border-purple hover:bg-lilac-soft"
+              className="press flex items-center gap-2 rounded-full border border-line px-4 py-[9px] text-[15px] hover:border-purple hover:bg-lilac-soft"
             >
               <span className="t-serif-italic leading-[1.3] text-purple">{s.number}</span>
               <span className="leading-[1.4] font-medium text-ink">{t(s.title, locale)}</span>

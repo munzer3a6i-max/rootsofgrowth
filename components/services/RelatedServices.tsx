@@ -12,7 +12,7 @@ export function RelatedServices({ locale, items }: { locale: Locale; items: Serv
   return (
     <section className="bg-white py-16 lg:py-[110px]">
       <div className="container-site flex flex-col gap-4 lg:gap-10">
-        <div className="flex items-end justify-between gap-6">
+        <div data-reveal className="flex items-end justify-between gap-6">
           <div className="flex flex-col items-start gap-[14px] lg:gap-[22px]">
             <Eyebrow>{t(L.related.eyebrow, locale)}</Eyebrow>
             <h2 className="t-h2 text-ink">{t(L.related.title, locale)}</h2>
@@ -25,11 +25,11 @@ export function RelatedServices({ locale, items }: { locale: Locale; items: Serv
         </div>
 
         <ul className="grid gap-[14px] md:grid-cols-3 lg:gap-6">
-          {items.map((s) => (
-            <li key={s.slug}>
+          {items.map((s, i) => (
+            <li key={s.slug} data-reveal style={{ "--i": i } as React.CSSProperties}>
               <Link
                 href={href(locale, `/services/${s.slug}`)}
-                className="group flex h-full items-center gap-[14px] rounded-[18px] bg-canvas p-[10px] transition-colors hover:bg-lilac-soft md:flex-col md:items-stretch md:gap-4 md:rounded-[24px] md:px-3 md:pt-3 md:pb-6"
+                className="group lift flex h-full items-center gap-[14px] rounded-[18px] bg-canvas p-[10px] hover:bg-lilac-soft md:flex-col md:items-stretch md:gap-4 md:rounded-[24px] md:px-3 md:pt-3 md:pb-6"
               >
                 <div className="relative size-[84px] shrink-0 overflow-hidden rounded-[12px] md:h-[220px] md:w-full md:rounded-[16px]">
                   <Image
@@ -37,7 +37,7 @@ export function RelatedServices({ locale, items }: { locale: Locale; items: Serv
                     alt=""
                     fill
                     sizes="(min-width: 768px) 380px, 84px"
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    className="media-zoom object-cover"
                   />
                 </div>
                 <div className="flex min-w-0 flex-1 flex-col gap-0.5 md:gap-2 md:px-3">
@@ -62,7 +62,7 @@ export function RelatedServices({ locale, items }: { locale: Locale; items: Serv
 function ArrowChip({ className = "", small }: { className?: string; small?: boolean }) {
   return (
     <span className={`shrink-0 rounded-full border border-line text-ink ${small ? "p-2" : "p-[9px]"} ${className}`}>
-      <Icon name="arrow-up-left" size={small ? 14 : 16} />
+      <Icon name="arrow-up-left" size={small ? 14 : 16} className="nudge" />
     </span>
   );
 }

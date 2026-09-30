@@ -23,12 +23,12 @@ export function DetailSidebar({ locale, slug }: { locale: Locale; slug: string }
               key={s.slug}
               href={href(locale, `/services/${s.slug}`)}
               aria-current={active ? "page" : undefined}
-              className={`t-label flex items-center justify-between gap-3 rounded-[14px] px-4 py-[13px] transition-colors ${
+              className={`group press t-label flex items-center justify-between gap-3 rounded-[14px] px-4 py-[13px] ${
                 active ? "bg-purple text-white" : "bg-canvas text-ink hover:bg-lilac-soft"
               }`}
             >
               <span>{t(s.short, locale)}</span>
-              <Icon name="arrow-left" size={16} className={active ? "" : "text-muted"} />
+              <Icon name="arrow-left" size={16} className={active ? "" : "nudge text-muted"} />
             </Link>
           );
         })}
@@ -38,13 +38,13 @@ export function DetailSidebar({ locale, slug }: { locale: Locale; slug: string }
         <Mark size={200} className="absolute top-[150px] -end-[50px] hidden opacity-[0.12] lg:block" />
         <h2 className="relative text-[22px] leading-[1.45] font-medium lg:text-[28px]">{t(L.help.title, locale)}</h2>
         <p className="t-body-s relative text-lilac-soft">{t(L.help.text, locale)}</p>
-        <a href={contact.phoneHref} className="t-label relative hidden items-center gap-[10px] hover:underline lg:flex">
+        <a href={contact.phoneHref} className="press t-label relative hidden items-center gap-[10px] hover:underline lg:flex">
           <span className="rounded-full bg-white/15 p-2">
             <Icon name="phone" size={16} />
           </span>
           <span dir="ltr">{contact.phoneDisplay}</span>
         </a>
-        <a href={`mailto:${contact.email}`} className="t-label relative hidden items-center gap-[10px] hover:underline lg:flex">
+        <a href={`mailto:${contact.email}`} className="press t-label relative hidden items-center gap-[10px] hover:underline lg:flex">
           <span className="rounded-full bg-white/15 p-2">
             <Icon name="mail" size={16} />
           </span>
@@ -57,11 +57,11 @@ export function DetailSidebar({ locale, slug }: { locale: Locale; slug: string }
 
       <Link
         href={href(locale, brochurePath)}
-        className="hidden items-center justify-between rounded-[24px] border border-line bg-white p-[22px] transition-colors hover:border-purple lg:flex"
+        className="group lift hidden items-center justify-between rounded-[24px] border border-line bg-white p-[22px] hover:border-purple lg:flex"
       >
         <span className="t-h4 font-medium text-ink">{t(L.brochure, locale)}</span>
         <span className="rounded-full bg-lilac-soft p-3 text-purple">
-          <Icon name="arrow-up-left" size={18} />
+          <Icon name="arrow-up-left" size={18} className="nudge" />
         </span>
       </Link>
     </aside>

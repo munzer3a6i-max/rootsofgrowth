@@ -15,7 +15,7 @@ UI transitions stay 150–300ms. Never `transition-all`, never `ease-in`, never 
 | `press` | any pressable that is not a `<Button>` (chips, filter buttons, icon buttons, pills) | `:active` scale(0.97), 160ms; also transitions colour/border/bg |
 | `group` + `nudge` | `group` on the link/card, `nudge` on its arrow `<Icon>` (arrow-left / arrow-up-left only) | arrow moves 3px in reading direction on hover |
 | `group` + `media-zoom` | `group` on the card link, `media-zoom` on the `next/image` (inside an `overflow-hidden` frame) | photo scales to 1.04 over 700ms on hover |
-| `lift` | light cards with a surface (white/canvas cards), on the card itself (it can also be the `group`) | 3px rise + soft shadow on hover |
+| `lift` | light cards with a surface (white/canvas cards), on the card itself (it can also be the `group`; can be combined with `press`) | 3px rise + soft shadow on hover |
 | `data-reveal` (+ `style={{ "--i": n } as React.CSSProperties}`) | section heading blocks and the items of a card grid / list that appears as a list | fades/rises in once when scrolled into view; `--i` staggers by 60ms (cap 6) |
 
 `<Button>`, `LanguageSwitch`, footer socials and the mobile menu already have press/nudge.
@@ -31,3 +31,4 @@ above are gated). Reduced motion is handled inside each utility.
 `PageShell` wraps the page body in React `<ViewTransition>` (crossfade + 14px rise); the header
 is anchored. Shared photo morphs use `<ViewTransition name="…" share="morph" default="none">`
 on both ends (names must be unique on a page).
+- Put `data-reveal` on a wrapper (e.g. the `<li>`), not on the same element as `press`/`lift` — the reveal transition would override theirs.

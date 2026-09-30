@@ -6,7 +6,7 @@ const [, , path = "/ar", out = "shot.png", width = "1440", full = "1"] = process
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: +width, height: 900 }, deviceScaleFactor: 1 });
 await page.goto("http://localhost:" + (process.env.PORT || 3000) + path, { waitUntil: "networkidle" });
-await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 700) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); } window.scrollTo(0, 0); });
-await page.waitForTimeout(400);
+await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 400) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 250)); } window.scrollTo(0, 0); });
+await page.waitForTimeout(1200);
 await page.screenshot({ path: out, fullPage: full === "1" });
 await browser.close();

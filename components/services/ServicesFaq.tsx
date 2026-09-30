@@ -10,7 +10,7 @@ export function ServicesFaq({ locale }: { locale: Locale }) {
   return (
     <section className="bg-canvas py-16 lg:py-[120px]">
       <div className="container-site flex flex-col gap-3 lg:flex-row lg:items-start lg:gap-20">
-        <div className="flex flex-col items-start gap-3 lg:w-[400px] lg:shrink-0 lg:gap-[22px]">
+        <div data-reveal className="flex flex-col items-start gap-3 lg:w-[400px] lg:shrink-0 lg:gap-[22px]">
           <Eyebrow>{t(c.eyebrow, locale)}</Eyebrow>
           <h2 className="t-h2 text-ink">
             <span className="block">{t(c.title, locale)}</span>
@@ -27,12 +27,20 @@ export function ServicesFaq({ locale }: { locale: Locale }) {
             <details
               key={i}
               open={i === 0}
+              data-reveal
+              style={{ "--i": i } as React.CSSProperties}
               className="group rounded-[18px] border border-line p-[18px] open:border-transparent open:bg-white lg:rounded-[20px] lg:px-7 lg:py-6"
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
-                <span className="t-label text-ink lg:text-[21px] lg:leading-[1.5]">{t(item.q, locale)}</span>
-                <span className="shrink-0 rounded-full bg-lilac-soft p-1.5 text-purple transition-colors group-open:bg-purple group-open:text-white lg:p-2">
-                  <Icon name="chevron-down" size={16} className="size-[14px] lg:size-4" />
+              <summary className="group/q flex cursor-pointer list-none items-center justify-between gap-4 [&::-webkit-details-marker]:hidden">
+                <span className="t-label text-ink transition-colors duration-150 group-hover/q:text-purple lg:text-[21px] lg:leading-[1.5]">
+                  {t(item.q, locale)}
+                </span>
+                <span className="shrink-0 rounded-full bg-lilac-soft p-1.5 text-purple transition-colors duration-200 group-open:bg-purple group-open:text-white lg:p-2">
+                  <Icon
+                    name="chevron-down"
+                    size={16}
+                    className="size-[14px] transition-transform duration-200 ease-out group-open:rotate-180 lg:size-4"
+                  />
                 </span>
               </summary>
               <p className="t-body-s mt-[10px] text-muted lg:mt-[14px] lg:max-w-[640px] lg:text-[17px] lg:leading-[1.85] lg:font-light">

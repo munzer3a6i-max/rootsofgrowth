@@ -19,27 +19,31 @@ export function ContactCards({ locale }: { locale: Locale }) {
   return (
     <section className="bg-canvas pt-16 lg:pt-[90px] lg:pb-5">
       <ul className="container-site grid grid-cols-1 gap-3 lg:grid-cols-3 lg:gap-6">
-        {cards.map((card) => (
-          <li key={card.icon}>
+        {cards.map((card, i) => (
+          <li key={card.icon} data-reveal style={{ "--i": i } as React.CSSProperties}>
+            {/* Hover lift sits on the link, press scale on the inner surface, so
+                the two transitions never override each other. */}
             <a
               href={card.href}
-              className="group flex h-full items-center gap-3 rounded-[18px] bg-white px-4 py-[14px] transition-shadow hover:shadow-[0_20px_40px_rgba(31,26,77,0.08)] focus-visible:outline-2 focus-visible:outline-purple lg:flex-col lg:items-start lg:gap-[14px] lg:rounded-[24px] lg:p-[30px]"
+              className="group lift block h-full rounded-[18px] focus-visible:outline-2 focus-visible:outline-purple lg:rounded-[24px]"
             >
-              <span className="flex size-[38px] shrink-0 items-center justify-center rounded-full bg-purple text-white lg:size-[50px]">
-                <Icon name={card.icon} size={22} className="size-[18px] lg:size-[22px]" />
-              </span>
-              <span className="flex min-w-0 flex-col gap-0.5 lg:gap-[14px]">
-                <span className="t-body-s text-muted">{card.label}</span>
-                <span
-                  dir={card.ltr ? "ltr" : undefined}
-                  className="t-label break-words text-ink rtl:text-end lg:text-[19px] lg:leading-[1.5] xl:text-[21px]"
-                >
-                  {card.value}
+              <span className="press flex h-full items-center gap-3 rounded-[18px] bg-white px-4 py-[14px] lg:flex-col lg:items-start lg:gap-[14px] lg:rounded-[24px] lg:p-[30px]">
+                <span className="flex size-[38px] shrink-0 items-center justify-center rounded-full bg-purple text-white lg:size-[50px]">
+                  <Icon name={card.icon} size={22} className="size-[18px] lg:size-[22px]" />
                 </span>
-              </span>
-              <span className="t-label hidden items-center gap-[6px] text-purple lg:inline-flex">
-                <span className="group-hover:underline group-hover:underline-offset-4">{card.action}</span>
-                <Icon name="arrow-left" size={16} />
+                <span className="flex min-w-0 flex-col gap-0.5 lg:gap-[14px]">
+                  <span className="t-body-s text-muted">{card.label}</span>
+                  <span
+                    dir={card.ltr ? "ltr" : undefined}
+                    className="t-label break-words text-ink rtl:text-end lg:text-[19px] lg:leading-[1.5] xl:text-[21px]"
+                  >
+                    {card.value}
+                  </span>
+                </span>
+                <span className="t-label hidden items-center gap-[6px] text-purple lg:inline-flex">
+                  <span className="group-hover:underline group-hover:underline-offset-4">{card.action}</span>
+                  <Icon name="arrow-left" size={16} className="nudge" />
+                </span>
               </span>
             </a>
           </li>
