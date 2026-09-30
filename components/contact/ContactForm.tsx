@@ -296,7 +296,7 @@ export function ContactForm({
       </div>
 
       {/* Honeypot — hidden from people, tempting for bots. */}
-      <div aria-hidden="true" className="absolute -start-[10000px] h-px w-px overflow-hidden">
+      <div aria-hidden="true" className="pointer-events-none absolute top-0 start-0 size-px overflow-hidden opacity-0 [clip-path:inset(50%)]">
         <label htmlFor={id("website")}>Website</label>
         <input
           id={id("website")}

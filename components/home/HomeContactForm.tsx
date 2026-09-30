@@ -174,7 +174,7 @@ export function HomeContactForm({
       </div>
 
       {/* Honeypot */}
-      <div aria-hidden="true" className="absolute -start-[9999px] size-px overflow-hidden">
+      <div aria-hidden="true" className="pointer-events-none absolute top-0 start-0 size-px overflow-hidden opacity-0 [clip-path:inset(50%)]">
         <label htmlFor={fid("website")}>Website</label>
         <input id={fid("website")} name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
