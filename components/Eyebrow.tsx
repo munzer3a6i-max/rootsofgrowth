@@ -12,7 +12,7 @@ export function Eyebrow({
   const color = tone === "light" ? "text-purple" : "text-lilac";
   return (
     <p className={`t-label inline-flex items-center gap-3 ${color} ${className}`}>
-      <span aria-hidden="true" className="h-[2px] w-9 rounded-full bg-current" />
+      <span aria-hidden="true" className="h-[2px] w-7 rounded-full bg-current lg:w-9" />
       <span>{children}</span>
     </p>
   );
