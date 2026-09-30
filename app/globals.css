@@ -153,7 +153,7 @@
 
 /* Directional icons (arrows) are drawn for RTL; mirror them in LTR. */
 @utility flip-ltr {
-  &:where([dir="ltr"] *) {
+  &:dir(ltr) {
     transform: scaleX(-1);
   }
 }

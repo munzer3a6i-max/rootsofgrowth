@@ -68,7 +68,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
 
   return (
     <html lang={locale} dir={dirOf(locale)} className={`${thmanyah.variable} ${dmSerif.variable} ${googleSansFlex.variable}`}>
-      <body>
+      {/* The viewport stays LTR (body dir="ltr") and the content direction lives on
+          the wrapper below: Chromium renders every View Transition snapshot blank when
+          the viewport itself is RTL (a white flash on /ar navigations). <html dir> is
+          kept for accessibility; body's direction is what the viewport uses. */}
+      <body dir="ltr">
+        <div dir={dirOf(locale)}>
         {/* Skip link lives here (not in each page) so the first element of every
             page is the header — Next's post-navigation scroll check relies on it. */}
         <a
@@ -80,6 +85,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         {children}
         <MotionObserver />
         <PageCurtain />
+        </div>
       </body>
     </html>
   );
