@@ -103,12 +103,15 @@ export function Footer({ locale }: { locale: Locale }) {
               <span>{t(site.footer.terms, locale)}</span>
             </div>
           </div>
-          <div aria-hidden="true" className="relative h-[260px] overflow-hidden">
+          {/* Big wordmark — the full logo (Figma 45:3255): 1240 wide, 5% white, 50px below. */}
+          <div aria-hidden="true" className="pt-[10px] pb-[50px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/brand/logo-white-mono.svg"
               alt=""
-              className="absolute top-[10px] left-0 h-auto w-full max-w-[1240px] opacity-5"
+              width={1240}
+              height={552}
+              className="pointer-events-none block h-auto w-full max-w-[1240px] opacity-5 select-none"
             />
           </div>
         </div>
