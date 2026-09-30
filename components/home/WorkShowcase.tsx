@@ -94,6 +94,7 @@ function ProjectTile({
     <ViewTransition name={`project-${project.slug}`} share="morph" default="none">
     <Link
       href={href(locale, `/work/${project.slug}`)}
+      transitionTypes={["morph"]}
       data-reveal
       style={{ "--i": index } as React.CSSProperties}
       className={`group relative block overflow-hidden rounded-[22px] bg-ink-soft lg:rounded-[24px] ${className}`}

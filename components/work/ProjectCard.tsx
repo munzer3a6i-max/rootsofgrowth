@@ -25,6 +25,7 @@ export function ProjectCard({
     <ViewTransition name={`project-${project.slug}`} share="morph" default="none">
     <Link
       href={href(locale, `/work/${project.slug}`)}
+      transitionTypes={["morph"]}
       className={`group relative block overflow-hidden rounded-[22px] bg-ink lg:rounded-[28px] ${
         featured ? "h-[440px] lg:h-[600px]" : "h-[320px] md:h-[400px] lg:h-[520px]"
       }`}

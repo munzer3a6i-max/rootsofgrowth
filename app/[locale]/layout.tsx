@@ -6,6 +6,7 @@ import { dirOf, isLocale, locales } from "@/lib/i18n";
 import { siteUrl } from "@/lib/metadata";
 import { site } from "@/content/site";
 import { MotionObserver } from "@/components/MotionObserver";
+import { PageCurtain } from "@/components/PageCurtain";
 import "../globals.css";
 
 /**
@@ -60,8 +61,17 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   return (
     <html lang={locale} dir={dirOf(locale)} className={`${thmanyah.variable} ${dmSerif.variable}`}>
       <body>
+        {/* Skip link lives here (not in each page) so the first element of every
+            page is the header — Next's post-navigation scroll check relies on it. */}
+        <a
+          href="#main"
+          className="fixed top-2 start-2 z-50 -translate-y-24 rounded-full bg-white px-4 py-2 text-ink focus:translate-y-0"
+        >
+          {locale === "ar" ? "تخطَّ إلى المحتوى" : "Skip to content"}
+        </a>
         {children}
         <MotionObserver />
+        <PageCurtain />
       </body>
     </html>
   );

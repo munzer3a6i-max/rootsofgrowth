@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { startTransition, useState, ViewTransition } from "react";
+import { addTransitionType, startTransition, useState, ViewTransition } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { departments, members, team, type Department } from "@/content/team";
 import { SectionHead } from "@/components/about/SectionHead";
@@ -44,6 +44,7 @@ export function TeamGrid({ locale }: { locale: Locale }) {
                 aria-pressed={on}
                 onClick={() =>
                   startTransition(() => {
+                    addTransitionType("filter");
                     setFilter(d.key);
                     setExpanded(false);
                   })
@@ -104,7 +105,7 @@ export function TeamGrid({ locale }: { locale: Locale }) {
         {hasMore && (
           <button
             type="button"
-            onClick={() => startTransition(() => setExpanded(true))}
+            onClick={() => startTransition(() => { addTransitionType("filter"); setExpanded(true); })}
             className={buttonClasses("outlineLight", "w-full lg:hidden")}
           >
             {t(c.showMore, locale)}

@@ -374,11 +374,93 @@ details[open]::details-content {
 ::view-transition-new(site-header) {
   animation: none;
 }
+/* Navigation: a purple curtain (with the roots mark) rises over the page,
+ * the page swaps underneath while covered, and the curtain exits upward.
+ * 850ms total — marketing-site navigation, one clear "turn of the page". */
+#page-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  display: grid;
+  place-items: center;
+  background: var(--color-purple);
+  pointer-events: none;
+  visibility: hidden;
+  view-transition-name: page-curtain;
+}
+html:active-view-transition #page-curtain {
+  visibility: visible;
+}
+/* Same-page transitions (filters) and photo morphs don't use the curtain. */
+html:active-view-transition-type(filter, morph)::view-transition-group(page-curtain) {
+  display: none;
+}
+::view-transition-group(page-curtain) {
+  animation: none;
+  z-index: 200;
+}
+::view-transition-old(page-curtain) {
+  display: none;
+}
+::view-transition-new(page-curtain) {
+  animation: 850ms both vt-curtain;
+}
 ::view-transition-old(.page) {
-  animation: 160ms var(--ease-out) both vt-fade-out;
+  animation: 850ms linear both vt-hold-old;
 }
 ::view-transition-new(.page) {
+  animation: 850ms both vt-show-new;
+}
+@keyframes vt-curtain {
+  0% {
+    transform: translateY(100%);
+    animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  42% {
+    transform: translateY(0);
+  }
+  56% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+@keyframes vt-hold-old {
+  0%,
+  44% {
+    opacity: 1;
+  }
+  45%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes vt-show-new {
+  0%,
+  52% {
+    opacity: 0;
+    translate: 0 24px;
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+/* Photo-morph navigations (project cards): quick crossfade + rise instead. */
+html:active-view-transition-type(morph)::view-transition-old(.page) {
+  animation: 160ms var(--ease-out) both vt-fade-out;
+}
+html:active-view-transition-type(morph)::view-transition-new(.page) {
   animation: 420ms var(--ease-out) 90ms both vt-rise-in;
+}
+/* No view-transition support: the new page still fades/rises in. */
+@supports not (view-transition-name: none) {
+  .page-enter {
+    animation: vt-rise-in 500ms var(--ease-out) both;
+  }
 }
 /* Shared photo (card → project/service hero). */
 ::view-transition-group(.morph) {
@@ -405,7 +487,19 @@ details[open]::details-content {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-new(.page) {
+  /* No sweeping curtain: a plain crossfade. */
+  html:active-view-transition #page-curtain {
+    visibility: hidden;
+  }
+  ::view-transition-old(.page),
+  html:active-view-transition-type(morph)::view-transition-old(.page) {
+    animation: 150ms ease both vt-fade-out;
+  }
+  ::view-transition-new(.page),
+  html:active-view-transition-type(morph)::view-transition-new(.page) {
+    animation: 200ms ease both vt-fade-in-only;
+  }
+  .page-enter {
     animation: 200ms ease both vt-fade-in-only;
   }
   ::view-transition-group(.morph) {

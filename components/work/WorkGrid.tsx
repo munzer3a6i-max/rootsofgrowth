@@ -1,6 +1,6 @@
 "use client";
 
-import { startTransition, useId, useState, ViewTransition, type CSSProperties } from "react";
+import { addTransitionType, startTransition, useId, useState, ViewTransition, type CSSProperties } from "react";
 import { t, type Locale } from "@/lib/i18n";
 import { projectCategories, projects, type ProjectCategory } from "@/content/projects";
 import { work } from "@/content/work";
@@ -45,7 +45,7 @@ export function WorkGrid({ locale }: { locale: Locale }) {
                 aria-pressed={pressed}
                 aria-label={`${t(c.label, locale)} (${countFor(c.key)})`}
                 aria-controls={gridId}
-                onClick={() => startTransition(() => setActive(c.key))}
+                onClick={() => startTransition(() => { addTransitionType("filter"); setActive(c.key); })}
                 className={`t-label inline-flex shrink-0 cursor-pointer items-center gap-1.5 press rounded-full border px-3.5 py-[9px] whitespace-nowrap lg:gap-2 lg:px-[18px] lg:py-[11px] ${
                   pressed ? "border-ink bg-ink text-white" : "border-line bg-white text-ink hover:border-purple"
                 }`}

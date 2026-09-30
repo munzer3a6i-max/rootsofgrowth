@@ -28,7 +28,15 @@ above are gated). Reduced motion is handled inside each utility.
 - Content stays visible without JS; `MotionObserver` only hides items that start below the fold.
 
 ## Page transitions
-`PageShell` wraps the page body in React `<ViewTransition>` (crossfade + 14px rise); the header
-is anchored. Shared photo morphs use `<ViewTransition name="…" share="morph" default="none">`
-on both ends (names must be unique on a page).
+Navigations use a branded curtain (`components/PageCurtain.tsx` + "Page transitions" in
+`app/globals.css`): a purple panel with the roots mark rises over the page (≈360ms), the page
+swaps underneath, and the panel exits upward (≈850ms total). `PageShell` wraps the page body in
+React `<ViewTransition enter="page" exit="page">`.
+- Same-page transitions must call `addTransitionType("filter")` inside `startTransition`
+  (Work/Team filters) so they skip the curtain.
+- Photo-morph links pass `transitionTypes={["morph"]}` to `<Link>`; both ends wrap the photo in
+  `<ViewTransition name="project-<slug>" share="morph" default="none">` (unique names per page).
+- Reduced motion: plain crossfade, no curtain. No View Transitions support: the page fades/rises in.
+- Keep the header as the first element of each page (the skip link lives in the layout), or
+  Next's post-navigation scroll will land below the header.
 - Put `data-reveal` on a wrapper (e.g. the `<li>`), not on the same element as `press`/`lift` — the reveal transition would override theirs.

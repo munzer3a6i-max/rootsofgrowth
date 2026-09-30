@@ -7,8 +7,9 @@ import { Footer } from "./Footer";
 
 /**
  * Announcement bar + nav, page content, CTA band + footer.
- * Navigations crossfade the page body (a short rise in) via <ViewTransition>;
- * the header is its own named layer so it stays anchored.
+ * Navigations animate the page body via <ViewTransition> (see "Page
+ * transitions" in app/globals.css): a branded curtain sweep, or a quick
+ * crossfade for photo-morph navigations.
  */
 export function PageShell({
   locale,
@@ -24,18 +25,12 @@ export function PageShell({
 }) {
   return (
     <>
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:start-2 focus:z-50 focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-ink"
-      >
-        {locale === "ar" ? "تخطَّ إلى المحتوى" : "Skip to content"}
-      </a>
       <div style={{ viewTransitionName: "site-header" }}>
         <AnnouncementBar locale={locale} />
         <Header locale={locale} active={active} />
       </div>
       <ViewTransition enter="page" exit="page" default="none">
-        <div>
+        <div className="page-enter">
           <main id="main">{children}</main>
           {cta && <CtaBand locale={locale} />}
           <Footer locale={locale} />
