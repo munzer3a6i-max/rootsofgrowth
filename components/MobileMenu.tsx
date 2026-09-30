@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { Locale } from "@/lib/i18n";
 import type { NavKey } from "@/content/site";
 import { Logo, Mark } from "./Brand";
@@ -30,6 +30,21 @@ export function MobileMenu({
   const closeRef = useRef<HTMLButtonElement>(null);
   const openRef = useRef<HTMLButtonElement>(null);
   const wasOpen = useRef(false);
+  // Circle origin (the trigger's centre) and the radius that covers the viewport.
+  const [origin, setOrigin] = useState<CSSProperties>({});
+
+  const openMenu = () => {
+    const r = openRef.current?.getBoundingClientRect();
+    if (r) {
+      const x = r.left + r.width / 2;
+      const y = r.top + r.height / 2;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const radius = Math.ceil(Math.hypot(Math.max(x, w - x), Math.max(y, h - y))) + 8;
+      setOrigin({ "--mx": `${x}px`, "--my": `${y}px`, "--mr": `${radius}px` } as CSSProperties);
+    }
+    setOpen(true);
+  };
 
   // Close when navigating.
   useEffect(() => setOpen(false), [pathname]);
@@ -58,7 +73,7 @@ export function MobileMenu({
       <button
         ref={openRef}
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={openMenu}
         aria-label={labels.open}
         aria-expanded={open}
         aria-controls="mobile-menu"
@@ -68,7 +83,9 @@ export function MobileMenu({
       </button>
 
       {/* Always mounted so it can animate out; `inert` + hidden when closed.
-          Enter: overlay fades (300ms), rows rise with a short stagger. Exit: 200ms, no stagger. */}
+          Enter: the sheet grows as a circle out of the menu button (`menu-sheet`
+          in globals.css), then the rows rise one after another. Exit: rows fade
+          fast and the circle collapses back into the button. */}
         <div
           id="mobile-menu"
           role="dialog"
@@ -79,10 +96,14 @@ export function MobileMenu({
           aria-label={labels.name}
           dir={locale === "ar" ? "rtl" : "ltr"}
           data-lenis-prevent
-          className="group/menu fixed inset-0 z-50 flex flex-col overflow-y-auto bg-ink px-5 pt-4 pb-8 text-white transition-[opacity,visibility] duration-200 ease-out data-[open=false]:invisible data-[open=false]:opacity-0 data-[open=true]:duration-300"
+          style={origin}
+          className="menu-sheet group/menu fixed inset-0 z-50 flex flex-col overflow-y-auto overscroll-contain bg-ink px-5 pt-4 pb-8 text-white"
         >
-          <Mark size={300} className="absolute -bottom-10 -end-20 opacity-5" />
-          <div className="relative flex items-center justify-between">
+          <Mark
+            size={300}
+            className="menu-item absolute -bottom-10 -end-20 opacity-5 [--menu-delay:120ms] [--menu-rise:0px] group-data-[open=false]/menu:scale-90 group-data-[open=false]/menu:-rotate-12"
+          />
+          <div className="menu-item relative flex items-center justify-between [--menu-delay:40ms] [--menu-rise:-6px]">
             <Link href={labels.home} aria-label={labels.name} onClick={() => setOpen(false)}>
               <Logo variant="white" width={108} className="h-auto w-[108px]" />
             </Link>
@@ -104,8 +125,8 @@ export function MobileMenu({
                 return (
                   <li
                     key={item.key}
-                    style={{ transitionDelay: open ? `${60 + i * 40}ms` : "0ms" }}
-                    className="border-b border-white/10 transition-[opacity,translate] duration-500 ease-out group-data-[open=false]/menu:translate-y-3 group-data-[open=false]/menu:opacity-0 group-data-[open=false]/menu:duration-150 motion-reduce:translate-y-0"
+                    style={{ "--menu-delay": `${140 + i * 45}ms` } as CSSProperties}
+                    className="menu-item border-b border-white/10"
                   >
                     <Link
                       href={item.href}
@@ -133,16 +154,25 @@ export function MobileMenu({
             </ul>
           </nav>
 
-          <Link
-            href={labels.ctaHref}
-            onClick={() => setOpen(false)}
-            className={buttonClasses("primary", "relative mt-8 w-full")}
+          {/* Wrapper carries the entrance so the button keeps its own press/sweep transitions. */}
+          <div
+            style={{ "--menu-delay": `${160 + items.length * 45}ms` } as CSSProperties}
+            className="menu-item relative mt-8"
           >
-            <span>{labels.cta}</span>
-            <Icon name="arrow-left" size={20} />
-          </Link>
+            <Link
+              href={labels.ctaHref}
+              onClick={() => setOpen(false)}
+              className={buttonClasses("primary", "w-full")}
+            >
+              <span>{labels.cta}</span>
+              <Icon name="arrow-left" size={20} />
+            </Link>
+          </div>
 
-          <div className="relative mt-6 flex flex-col items-start gap-2 text-on-dark-muted">
+          <div
+            style={{ "--menu-delay": `${200 + items.length * 45}ms` } as CSSProperties}
+            className="menu-item relative mt-6 flex flex-col items-start gap-2 text-on-dark-muted"
+          >
             <a href={contact.phoneHref} className="t-label inline-flex items-center gap-2">
               <Icon name="phone" size={16} className="text-lilac" />
               <span dir="ltr">{contact.phone}</span>

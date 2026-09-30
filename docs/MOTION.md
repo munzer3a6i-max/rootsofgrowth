@@ -33,6 +33,14 @@ above are gated). Reduced motion is handled inside each utility.
   hover text colour per variant.
 - **Text links:** `link-draw` draws an underline in from the reading-start edge (footer links).
 
+## Mobile
+- **Menu:** the sheet grows as a circle out of the menu button (`menu-sheet`, 640ms drawer curve)
+  and collapses back into it on close (420ms). Rows (`menu-item`, `--menu-delay`) rise in after
+  the circle reaches them and fade out at once. Reduced motion = 200ms fade.
+- **Reveals below `lg`:** no blur (expensive on phone GPUs), 12px rise, 560ms, 40ms stagger.
+- Touch scrolling stays native (momentum is the platform's); taps have no grey highlight and no
+  double-tap-zoom delay (`@layer base`).
+
 ## Rules for reveals
 - Never on the hero / `PageHeader` / anything above the fold.
 - Not on every paragraph: one heading block per section + the grid items. Skip small inline bits.
