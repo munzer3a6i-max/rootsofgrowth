@@ -3,10 +3,10 @@ import type { L } from "@/lib/i18n";
 /** Company contact details — edit here and every page updates. */
 export const contact = {
   email: "info@rootsofgrowth.com.sa",
-  phoneDisplay: "+966 55 792 8248",
-  phoneLocal: "055 792 8248",
-  phoneHref: "tel:+966557928248",
-  whatsappHref: "https://wa.me/966557928248",
+  phoneDisplay: "+966 50 624 6694",
+  phoneLocal: "050 624 6694",
+  phoneHref: "tel:+966506246694",
+  whatsappHref: "https://wa.me/966506246694",
   address: {
     ar: "الرياض، المملكة العربية السعودية",
     en: "Riyadh, Kingdom of Saudi Arabia",

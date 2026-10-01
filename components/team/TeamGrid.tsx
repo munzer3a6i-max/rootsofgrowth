@@ -35,7 +35,7 @@ export function TeamGrid({ locale }: { locale: Locale }) {
           aria-label={t(c.filterLabel, locale)}
           className="-mx-5 flex gap-2 overflow-x-auto px-5 [scrollbar-width:none] md:-mx-10 md:px-10 lg:mx-0 lg:flex-wrap lg:gap-[10px] lg:overflow-visible lg:px-0 [&::-webkit-scrollbar]:hidden"
         >
-          {departments.map((d) => {
+          {departments.filter((d) => d.key === "all" || members.some((m) => m.department === d.key)).map((d) => {
             const on = filter === d.key;
             return (
               <button

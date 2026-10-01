@@ -6,8 +6,9 @@ import { contact } from "@/content/site";
  * Team page copy (Figma "Team — فريقنا" desktop 41:2163 / mobile 42:2375).
  * Where the mobile frame uses shorter wording, it lives in a `…Mobile` field.
  *
- * NOTE: names/titles/bios in [brackets] are placeholders in the design —
- * replace them (and add `photo`) when the real team details are available.
+ * NOTE: the two extra leadership cards are still placeholders ([brackets]) —
+ * replace them (and add `photo`s) when the details are available. Department
+ * filters with no members are hidden automatically (TeamGrid).
  */
 
 export type Department = "executive" | "design" | "operations" | "media";
@@ -69,13 +70,26 @@ export const leaders: Leader[] = [
 /** Team grid — reading order. */
 export const members: Member[] = [
   { ...mohsen, department: "executive" },
-  { name: placeholderName, role: placeholderRole, department: "design" },
-  { name: placeholderName, role: placeholderRole, department: "operations" },
-  { name: placeholderName, role: placeholderRole, department: "media" },
-  { name: placeholderName, role: placeholderRole, department: "executive" },
-  { name: placeholderName, role: placeholderRole, department: "design" },
-  { name: placeholderName, role: placeholderRole, department: "operations" },
-  { name: placeholderName, role: placeholderRole, department: "operations" },
+  {
+    name: { ar: "محمد أبو الذيب", en: "Mohammed Abu Al-Theyeb" },
+    role: { ar: "مدير العمليات", en: "Operations Manager" },
+    department: "operations",
+  },
+  {
+    name: { ar: "سلطان مسيفر", en: "Sultan Musaifer" },
+    role: { ar: "مدير المشاريع", en: "Project Manager" },
+    department: "executive",
+  },
+  {
+    name: { ar: "نورة العتيبي", en: "Noura Al-Otaibi" },
+    role: { ar: "أخصائية التسويق", en: "Marketing Specialist" },
+    department: "media",
+  },
+  {
+    name: { ar: "مشعل الدوسري", en: "Mishal Al-Dosari" },
+    role: { ar: "أخصائي التصوير", en: "Photography Specialist" },
+    department: "media",
+  },
 ];
 
 export const team = {
