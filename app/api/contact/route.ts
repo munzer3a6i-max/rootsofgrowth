@@ -132,7 +132,7 @@ export async function POST(req: Request) {
     if ("missing" in loaded) {
       console.error(
         `[api/contact] Email is not configured — missing env: ${loaded.missing.join(", ")}. ` +
-          "Set the SMTP_* and CONTACT_TO variables (see .env.example). The submission was NOT delivered.",
+          "Set the SMTP_* variables (see .env.example). The submission was NOT delivered.",
       );
       return reply({ ok: false, error: "server" }, 500);
     }

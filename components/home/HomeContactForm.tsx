@@ -5,6 +5,7 @@ import type { Locale } from "@/lib/i18n";
 import { isValidEmail, isValidPhone, normalizeDigits, type ContactPayload, type ContactResponse } from "@/lib/contact";
 import { SubmitButton } from "@/components/Button";
 import { Icon } from "@/components/Icon";
+import { Select } from "@/components/Select";
 
 type Labels = {
   title: string;
@@ -239,31 +240,15 @@ export function HomeContactForm({
         </FieldBox>
 
         <FieldBox id={fid("service")} label={L.service}>
-          <div className="relative">
-            <select
-              id={fid("service")}
-              name="service"
-              value={service}
-              onChange={(e) => setService(e.currentTarget.value)}
-              className={`${inputBase} h-[50px] cursor-pointer appearance-none border-line pe-10 lg:h-[54px] lg:pe-12 [&>option]:text-ink ${
-                service ? "" : "text-muted"
-              }`}
-            >
-              <option value="" disabled>
-                {L.servicePh}
-              </option>
-              {services.map((s) => (
-                <option key={s.value} value={s.value}>
-                  {s.label}
-                </option>
-              ))}
-            </select>
-            <Icon
-              name="chevron-down"
-              size={18}
-              className="pointer-events-none absolute end-[14px] top-1/2 size-4 -translate-y-1/2 text-ink lg:end-[18px] lg:size-[18px]"
-            />
-          </div>
+          <Select
+            id={fid("service")}
+            name="service"
+            value={service}
+            onChange={setService}
+            placeholder={L.servicePh}
+            options={services}
+            className={`${inputBase} h-[50px] border-line lg:h-[54px]`}
+          />
         </FieldBox>
         <FieldBox id={fid("date")} label={L.date} className="hidden lg:flex">
           <div className="relative">

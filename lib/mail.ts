@@ -1,9 +1,11 @@
 import nodemailer, { type Transporter } from "nodemailer";
+import { contact } from "@/content/site";
 
 /**
  * SMTP mailer for the contact form. Configured entirely from env:
  *   SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASS,
- *   CONTACT_TO (comma-separated), CONTACT_FROM (optional, defaults to SMTP_USER).
+ *   CONTACT_TO (optional, comma-separated; defaults to the site email, info@rootsofgrowth.com.sa),
+ *   CONTACT_FROM (optional, defaults to SMTP_USER).
  */
 export type MailConfig = {
   host: string;
@@ -18,7 +20,7 @@ export type MailConfig = {
 /** Returns the config, or the list of missing env variable names. */
 export function readMailConfig(): { config: MailConfig } | { missing: string[] } {
   const env = process.env;
-  const required = ["SMTP_HOST", "SMTP_USER", "SMTP_PASS", "CONTACT_TO"] as const;
+  const required = ["SMTP_HOST", "SMTP_USER", "SMTP_PASS"] as const;
   const missing: string[] = required.filter((k) => !env[k]?.trim());
   const port = Number(env.SMTP_PORT || 465);
   if (!Number.isInteger(port) || port <= 0) missing.push("SMTP_PORT (invalid)");
@@ -33,7 +35,7 @@ export function readMailConfig(): { config: MailConfig } | { missing: string[] }
       secure,
       user: env.SMTP_USER!.trim(),
       pass: env.SMTP_PASS!,
-      to: env.CONTACT_TO!.split(",").map((s) => s.trim()).filter(Boolean),
+      to: (env.CONTACT_TO?.trim() || contact.email).split(",").map((s) => s.trim()).filter(Boolean),
       from: (env.CONTACT_FROM || "").trim() || env.SMTP_USER!.trim(),
     },
   };

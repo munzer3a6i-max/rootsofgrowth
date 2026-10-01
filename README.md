@@ -54,9 +54,9 @@ Requires Node.js **20.9+** (22 recommended).
    | `SMTP_HOST`            | `smtp.hostinger.com`                                                |
    | `SMTP_PORT`            | `465`                                                               |
    | `SMTP_SECURE`          | `true` (use `false` with port `587`)                                |
-   | `SMTP_USER`            | a mailbox you create in hPanel → Emails, e.g. `info@yourdomain.com` |
+   | `SMTP_USER`            | the mailbox you create in hPanel → Emails, e.g. `info@rootsofgrowth.com.sa` |
    | `SMTP_PASS`            | that mailbox's password                                             |
-   | `CONTACT_TO`           | where form submissions go, e.g. `mohsen@rootsofgrowth0.com`         |
+   | `CONTACT_TO`           | optional; where submissions go (default `info@rootsofgrowth.com.sa`) |
    | `CONTACT_FROM`         | optional, defaults to `SMTP_USER`                                   |
    | `NEXT_PUBLIC_SITE_URL` | `https://your-domain.com` (used for canonical URLs & sitemap)       |
 
@@ -73,7 +73,7 @@ Requires Node.js **20.9+** (22 recommended).
 ### After deploying
 
 - Open `/ar` and `/en`, switch languages from the nav pill.
-- Send a test message from **Contact**; it should arrive at `CONTACT_TO`. If it doesn't, check the
+- Send a test message from **Contact**; it should arrive at `info@rootsofgrowth.com.sa` (or `CONTACT_TO` if set). If it doesn't, check the
   app's runtime logs in hPanel — a missing/incorrect SMTP variable is logged clearly.
 
 ---

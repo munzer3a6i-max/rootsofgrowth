@@ -514,6 +514,33 @@ html:lang(en) h3 {
   }
 }
 
+/* Dropdown panel (components/Select.tsx): drops in from just under the
+ * field (origin top), 180ms in / 120ms out; reduced motion = fade. */
+.select-panel {
+  transform-origin: top center;
+  transition:
+    opacity 180ms var(--ease-out),
+    scale 180ms var(--ease-out),
+    translate 180ms var(--ease-out),
+    visibility 0s;
+}
+.select-panel[data-open="false"] {
+  opacity: 0;
+  scale: 0.97;
+  translate: 0 -4px;
+  visibility: hidden;
+  pointer-events: none;
+  transition-duration: 120ms, 120ms, 120ms, 0s;
+  transition-delay: 0s, 0s, 0s, 120ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  .select-panel,
+  .select-panel[data-open="false"] {
+    scale: none;
+    translate: none;
+  }
+}
+
 /* Accordions (<details>): smooth open/close where ::details-content is
  * supported (Chromium 131+); elsewhere they simply snap, as before. */
 details::details-content {

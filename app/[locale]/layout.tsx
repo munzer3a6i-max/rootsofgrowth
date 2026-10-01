@@ -69,11 +69,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   if (!isLocale(locale)) notFound();
 
   return (
-    <html lang={locale} dir={dirOf(locale)} className={`${thmanyah.variable} ${dmSerif.variable} ${googleSansFlex.variable}`}>
-      {/* The viewport stays LTR (body dir="ltr") and the content direction lives on
-          the wrapper below: Chromium renders every View Transition snapshot blank when
-          the viewport itself is RTL (a white flash on /ar navigations). <html dir> is
-          kept for accessibility; body's direction is what the viewport uses. */}
+    <html lang={locale} dir="ltr" className={`${thmanyah.variable} ${dmSerif.variable} ${googleSansFlex.variable}`}>
+      {/* The viewport stays LTR and the content direction lives on the wrapper
+          below. View Transitions break when the viewport is RTL (Chromium renders
+          the snapshots blank; WebKit/Gecko mis-place them, since they take the
+          viewport direction from <html> while Chromium takes it from <body>), so
+          both <html> and <body> are LTR. Everything visible is inside the wrapper. */}
       <body dir="ltr">
         <div dir={dirOf(locale)}>
         {/* Skip link lives here (not in each page) so the first element of every

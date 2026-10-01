@@ -6,6 +6,7 @@ import { services } from "@/content/services";
 import { contactForm as c } from "@/content/contact";
 import { contact } from "@/content/site";
 import { SubmitButton } from "@/components/Button";
+import { Select } from "@/components/Select";
 import { Icon } from "@/components/Icon";
 import {
   ATTACHMENT_ACCEPT,
@@ -276,8 +277,7 @@ export function ContactForm({
     );
   }
 
-  const selectCls = (value: string, err?: FieldError) =>
-    `${inputBox} ${borderOf(err)} h-[52px] cursor-pointer appearance-none pe-10 lg:h-14 lg:pe-12 ${value ? "text-ink" : "text-muted"}`;
+  const selectCls = (err?: FieldError) => `${inputBox} ${borderOf(err)} h-[52px] lg:h-14`;
   const described = (k: keyof Errors) => (errors[k] ? `${id(k)}-error` : undefined);
 
   return (
@@ -392,57 +392,33 @@ export function ContactForm({
         </Field>
 
         <Field id={id("service")} label={t(c.fields.service.label, locale)} required error={errors.service} locale={locale}>
-          <div className="relative">
-            <select
-              id={id("service")}
-              data-field="service"
-              name="service"
-              value={values.service}
-              onChange={(e) => set("service", e.target.value)}
-              aria-invalid={!!errors.service}
-              aria-describedby={described("service")}
-              aria-required
-              className={selectCls(values.service, errors.service)}
-            >
-              <option value="">{t(c.fields.service.placeholder, locale)}</option>
-              {services.map((s) => (
-                <option key={s.slug} value={s.slug}>
-                  {t(s.title, locale)}
-                </option>
-              ))}
-              <option value={c.otherService.value}>{t(c.otherService.label, locale)}</option>
-            </select>
-            <Icon
-              name="chevron-down"
-              size={18}
-              className="pointer-events-none absolute end-[14px] top-1/2 size-4 -translate-y-1/2 text-ink lg:end-[19px] lg:size-[18px]"
-            />
-          </div>
+          <Select
+            id={id("service")}
+            fieldAttr="service"
+            value={values.service}
+            onChange={(v) => set("service", v)}
+            placeholder={t(c.fields.service.placeholder, locale)}
+            options={[
+              ...services.map((s) => ({ value: s.slug, label: t(s.title, locale) })),
+              { value: c.otherService.value, label: t(c.otherService.label, locale) },
+            ]}
+            invalid={!!errors.service}
+            describedBy={described("service")}
+            required
+            className={selectCls(errors.service)}
+          />
         </Field>
 
         <Field id={id("city")} label={t(c.fields.city.label, locale)} locale={locale} className={hideMobile}>
-          <div className="relative">
-            <select
-              id={id("city")}
-              data-field="city"
-              name="city"
-              value={values.city}
-              onChange={(e) => set("city", e.target.value)}
-              className={selectCls(values.city)}
-            >
-              <option value="">{t(c.fields.city.placeholder, locale)}</option>
-              {c.cities.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {t(o.label, locale)}
-                </option>
-              ))}
-            </select>
-            <Icon
-              name="chevron-down"
-              size={18}
-              className="pointer-events-none absolute end-[14px] top-1/2 -translate-y-1/2 text-ink lg:end-[19px]"
-            />
-          </div>
+          <Select
+            id={id("city")}
+            fieldAttr="city"
+            value={values.city}
+            onChange={(v) => set("city", v)}
+            placeholder={t(c.fields.city.placeholder, locale)}
+            options={c.cities.map((o) => ({ value: o.value, label: t(o.label, locale) }))}
+            className={selectCls()}
+          />
         </Field>
 
         <Field id={id("date")} label={t(c.fields.date.label, locale)} error={errors.date} locale={locale}>
@@ -481,28 +457,15 @@ export function ContactForm({
         </Field>
 
         <Field id={id("attendees")} label={t(c.fields.attendees.label, locale)} locale={locale} className={hideMobile}>
-          <div className="relative">
-            <select
-              id={id("attendees")}
-              data-field="attendees"
-              name="attendees"
-              value={values.attendees}
-              onChange={(e) => set("attendees", e.target.value)}
-              className={selectCls(values.attendees)}
-            >
-              <option value="">{t(c.fields.attendees.placeholder, locale)}</option>
-              {c.attendees.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {t(o.label, locale)}
-                </option>
-              ))}
-            </select>
-            <Icon
-              name="chevron-down"
-              size={18}
-              className="pointer-events-none absolute end-[14px] top-1/2 -translate-y-1/2 text-ink lg:end-[19px]"
-            />
-          </div>
+          <Select
+            id={id("attendees")}
+            fieldAttr="attendees"
+            value={values.attendees}
+            onChange={(v) => set("attendees", v)}
+            placeholder={t(c.fields.attendees.placeholder, locale)}
+            options={c.attendees.map((o) => ({ value: o.value, label: t(o.label, locale) }))}
+            className={selectCls()}
+          />
         </Field>
       </div>
 

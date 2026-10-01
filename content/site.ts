@@ -2,7 +2,7 @@ import type { L } from "@/lib/i18n";
 
 /** Company contact details — edit here and every page updates. */
 export const contact = {
-  email: "mohsen@rootsofgrowth0.com",
+  email: "info@rootsofgrowth.com.sa",
   phoneDisplay: "+966 55 792 8248",
   phoneLocal: "055 792 8248",
   phoneHref: "tel:+966557928248",

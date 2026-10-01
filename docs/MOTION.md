@@ -58,6 +58,8 @@ React `<ViewTransition enter="page" exit="page">`.
 - Hero/page-header entrances (`hero-*` utilities) play on a fresh load only; after the first
   in-app navigation `html[data-navigated]` disables them so pages arrive complete.
 - Reduced motion: plain crossfade, no curtain. No View Transitions support: the page fades/rises in.
+- Keep `<html>` and `<body>` `dir="ltr"`; the locale direction lives on the wrapper `<div>` in
+  the layout. An RTL viewport breaks View Transitions (blank or misplaced snapshots).
 - Keep the header as the first element of each page (the skip link lives in the layout), or
   Next's post-navigation scroll will land below the header.
 - Put `data-reveal` on a wrapper (e.g. the `<li>`), not on the same element as `press`/`lift` — the reveal transition would override theirs.
