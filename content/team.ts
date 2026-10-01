@@ -6,9 +6,9 @@ import { contact } from "@/content/site";
  * Team page copy (Figma "Team — فريقنا" desktop 41:2163 / mobile 42:2375).
  * Where the mobile frame uses shorter wording, it lives in a `…Mobile` field.
  *
- * NOTE: the two extra leadership cards are still placeholders ([brackets]) —
- * replace them (and add `photo`s) when the details are available. Department
- * filters with no members are hidden automatically (TeamGrid).
+ * Add `photo` to a person when their portrait is available (otherwise a
+ * branded placeholder shows). Department filters with no members are hidden
+ * automatically (TeamGrid).
  */
 
 export type Department = "executive" | "design" | "operations" | "media";
@@ -33,13 +33,6 @@ export const departments: { key: Department | "all"; label: L; labelMobile: L }[
   },
 ];
 
-const placeholderName: L = { ar: "[اسم العضو]", en: "[Member name]" };
-const placeholderRole: L = { ar: "[المسمى الوظيفي]", en: "[Job title]" };
-const placeholderBio: L = {
-  ar: "[نبذة قصيرة عن الخبرة والدور في الفريق — سطران كحد أقصى.]",
-  en: "[A short bio on experience and role in the team — two lines max.]",
-};
-
 export type Person = {
   name: L;
   role: L;
@@ -49,7 +42,7 @@ export type Person = {
   email?: string;
 };
 
-export type Leader = Person & { bio: L };
+export type Leader = Person;
 export type Member = Person & { department: Department };
 
 const mohsen: Person = {
@@ -60,26 +53,22 @@ const mohsen: Person = {
   email: contact.email,
 };
 
+const mohammed: Person = {
+  name: { ar: "محمد أبو الذيب", en: "Mohammed Abu Al-Theyeb" },
+  role: { ar: "مدير العمليات", en: "Operations Manager" },
+};
+
+const sultan: Person = {
+  name: { ar: "سلطان مسيفر", en: "Sultan Musaifer" },
+  role: { ar: "مدير المشاريع", en: "Project Manager" },
+};
+
 /** Leadership — reading order (rightmost in the RTL frame first). */
-export const leaders: Leader[] = [
-  { ...mohsen, bio: placeholderBio },
-  { name: placeholderName, role: placeholderRole, bio: placeholderBio },
-  { name: placeholderName, role: placeholderRole, bio: placeholderBio },
-];
+export const leaders: Leader[] = [mohsen, mohammed, sultan];
 
 /** Team grid — reading order. */
 export const members: Member[] = [
   { ...mohsen, department: "executive" },
-  {
-    name: { ar: "محمد أبو الذيب", en: "Mohammed Abu Al-Theyeb" },
-    role: { ar: "مدير العمليات", en: "Operations Manager" },
-    department: "operations",
-  },
-  {
-    name: { ar: "سلطان مسيفر", en: "Sultan Musaifer" },
-    role: { ar: "مدير المشاريع", en: "Project Manager" },
-    department: "executive",
-  },
   {
     name: { ar: "نورة العتيبي", en: "Noura Al-Otaibi" },
     role: { ar: "أخصائية التسويق", en: "Marketing Specialist" },

@@ -54,7 +54,6 @@ export function Leadership({ locale }: { locale: Locale }) {
                 </div>
                 <SocialLinks person={l} locale={locale} size="lg" />
               </div>
-              <p className="t-body-s text-muted">{t(l.bio, locale)}</p>
             </li>
           ))}
         </ul>
