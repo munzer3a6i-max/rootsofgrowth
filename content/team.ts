@@ -69,6 +69,8 @@ export const leaders: Leader[] = [mohsen, mohammed, sultan];
 /** Team grid — reading order. */
 export const members: Member[] = [
   { ...mohsen, department: "executive" },
+  { ...mohammed, department: "operations" },
+  { ...sultan, department: "executive" },
   {
     name: { ar: "نورة العتيبي", en: "Noura Al-Otaibi" },
     role: { ar: "أخصائية التسويق", en: "Marketing Specialist" },
