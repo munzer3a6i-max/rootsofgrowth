@@ -15,7 +15,7 @@ export const contact = {
   social: {
     linkedin: "https://www.linkedin.com/",
     x: "https://x.com/",
-    instagram: "https://www.instagram.com/",
+    instagram: "https://www.instagram.com/grootsof/",
   },
 };
 
