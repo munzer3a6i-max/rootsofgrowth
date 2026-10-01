@@ -33,7 +33,17 @@ export type ContactPayload = {
 export type ContactAttachment = { name: string; type: string; /** base64, no data: prefix */ data: string };
 
 export type ContactErrorCode = "validation" | "rate_limited" | "server";
-export type ContactResponse = { ok: true } | { ok: false; error: ContactErrorCode; fields?: Record<string, FieldError> };
+export type ContactResponse =
+  | { ok: true }
+  | {
+      ok: false;
+      error: ContactErrorCode;
+      fields?: Record<string, FieldError>;
+      /** Why a server error happened (no secrets): "not_configured" (lists missing env names),
+       *  "smtp_auth", "smtp_connection" or "smtp_rejected". Visible in the browser's Network tab. */
+      reason?: string;
+      missing?: string[];
+    };
 
 export type FieldError = "required" | "email" | "phone" | "tooLong" | "fileType" | "fileSize" | "name" | "service";
 

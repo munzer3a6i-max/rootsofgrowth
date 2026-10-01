@@ -43,6 +43,14 @@ function clientIp(req: Request): string {
 }
 
 /* ───────── Helpers ───────── */
+/** Coarse, secret-free category for an SMTP failure (nodemailer error codes). */
+function smtpReason(err: unknown): string {
+  const code = (err as { code?: string } | null)?.code ?? "";
+  if (code === "EAUTH") return "smtp_auth";
+  if (["ECONNECTION", "ETIMEDOUT", "ESOCKET", "EDNS", "ECONNREFUSED", "ETLS"].includes(code)) return "smtp_connection";
+  return "smtp_rejected";
+}
+
 function reply(body: ContactResponse, status: number) {
   return NextResponse.json(body, { status, headers: { "Cache-Control": "no-store" } });
 }
@@ -134,7 +142,7 @@ export async function POST(req: Request) {
         `[api/contact] Email is not configured — missing env: ${loaded.missing.join(", ")}. ` +
           "Set the SMTP_* variables (see .env.example). The submission was NOT delivered.",
       );
-      return reply({ ok: false, error: "server" }, 500);
+      return reply({ ok: false, error: "server", reason: "not_configured", missing: loaded.missing }, 500);
     }
 
     const f = contactForm.fields;
@@ -208,7 +216,7 @@ export async function POST(req: Request) {
       });
     } catch (err) {
       console.error("[api/contact] Failed to send email via SMTP:", err instanceof Error ? err.message : err);
-      return reply({ ok: false, error: "server" }, 500);
+      return reply({ ok: false, error: "server", reason: smtpReason(err) }, 500);
     }
 
     return reply({ ok: true }, 200);

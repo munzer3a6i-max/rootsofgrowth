@@ -70,11 +70,20 @@ Requires Node.js **20.9+** (22 recommended).
 2. hPanel → **Websites → Add website → Node.js Apps → Upload your website files**, upload the zip.
 3. Use the same build settings and environment variables as in Option A, then deploy.
 
+### Deploying on Vercel instead
+
+Add the same `SMTP_*` variables in Vercel → Project → **Settings → Environment Variables**
+(enable them for *Production*), then **redeploy** — Vercel only applies variable changes to new
+deployments. Without them the form answers `500` with `"reason":"not_configured"`.
+
 ### After deploying
 
 - Open `/ar` and `/en`, switch languages from the nav pill.
 - Send a test message from **Contact**; it should arrive at `info@rootsofgrowth.com.sa` (or `CONTACT_TO` if set). If it doesn't, check the
   app's runtime logs in hPanel — a missing/incorrect SMTP variable is logged clearly.
+- The form's error response also says why (browser DevTools → Network → `contact`):
+  `not_configured` (+ the missing variable names), `smtp_auth` (wrong mailbox/password),
+  `smtp_connection` (wrong host/port/secure) or `smtp_rejected` (the mail server refused it).
 
 ---
 
