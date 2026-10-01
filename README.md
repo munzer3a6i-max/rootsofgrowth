@@ -70,11 +70,19 @@ Requires Node.js **20.9+** (22 recommended).
 2. hPanel → **Websites → Add website → Node.js Apps → Upload your website files**, upload the zip.
 3. Use the same build settings and environment variables as in Option A, then deploy.
 
-### Deploying on Vercel instead
+### Contact form delivery
 
-Add the same `SMTP_*` variables in Vercel → Project → **Settings → Environment Variables**
-(enable them for *Production*), then **redeploy** — Vercel only applies variable changes to new
-deployments. Without them the form answers `500` with `"reason":"not_configured"`.
+By default the forms post straight to **FormSubmit** (formsubmit.co), which emails each request to
+`info@rootsofgrowth.com.sa` — no server settings needed, works on any host (Vercel, Hostinger…).
+
+1. Deploy, then send one test request from the site.
+2. FormSubmit emails an **"Activate Form"** link to `info@rootsofgrowth.com.sa`. Click it. Until you
+   do, nothing is delivered (the form shows an error for that first test).
+3. Optional: FormSubmit then shows a random alias for the address; set it as
+   `NEXT_PUBLIC_FORMSUBMIT_ID` and redeploy so the address isn't in the page source.
+
+To use your own mailbox over SMTP instead, set `NEXT_PUBLIC_CONTACT_MODE=smtp` plus the `SMTP_*`
+variables above (on Vercel: Settings → Environment Variables, then redeploy).
 
 ### After deploying
 

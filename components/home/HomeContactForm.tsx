@@ -2,8 +2,9 @@
 
 import { useEffect, useId, useState, type FormEvent, type ReactNode } from "react";
 import type { Locale } from "@/lib/i18n";
-import { isValidEmail, isValidPhone, normalizeDigits, type ContactPayload, type ContactResponse } from "@/lib/contact";
+import { isValidEmail, isValidPhone, normalizeDigits, type ContactPayload } from "@/lib/contact";
 import { SubmitButton } from "@/components/Button";
+import { sendContact } from "@/lib/sendContact";
 import { Icon } from "@/components/Icon";
 import { Select } from "@/components/Select";
 
@@ -110,13 +111,8 @@ export function HomeContactForm({
 
     setStatus({ kind: "sending" });
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = (await res.json().catch(() => null)) as ContactResponse | null;
-      if (data?.ok) {
+      const data = await sendContact(payload);
+      if (data.ok) {
         form.reset();
         setDateType("text");
         setService("");
@@ -124,8 +120,8 @@ export function HomeContactForm({
         setStatus({ kind: "success" });
         return;
       }
-      const code = data && !data.ok ? data.error : "server";
-      if (data && !data.ok && data.fields) setErrors(data.fields as Partial<Record<Field, string>>);
+      const code = data.error;
+      if (data.fields) setErrors(data.fields as Partial<Record<Field, string>>);
       setStatus({ kind: "error", code });
     } catch {
       setStatus({ kind: "error", code: "network" });

@@ -6,6 +6,7 @@ import { services } from "@/content/services";
 import { contactForm as c } from "@/content/contact";
 import { contact } from "@/content/site";
 import { SubmitButton } from "@/components/Button";
+import { sendContact } from "@/lib/sendContact";
 import { Select } from "@/components/Select";
 import { Icon } from "@/components/Icon";
 import {
@@ -15,7 +16,6 @@ import {
   isValidEmail,
   isValidPhone,
   type ContactPayload,
-  type ContactResponse,
   type FieldError,
 } from "@/lib/contact";
 
@@ -85,14 +85,6 @@ function errorText(code: FieldError, locale: Locale) {
   return t(c.errors[map[code]], locale);
 }
 
-function readAsBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result).replace(/^data:[^,]*,/, ""));
-    reader.onerror = () => reject(reader.error);
-    reader.readAsDataURL(file);
-  });
-}
 
 /* ───────── Field primitives ───────── */
 /** State feedback: messages/panels fade + rise in once when they mount (@starting-style). */
@@ -224,23 +216,17 @@ export function ContactForm({
         date: values.date,
         locale,
         website: values.website,
-        attachment: file ? { name: file.name, type: file.type, data: await readAsBase64(file) } : null,
       };
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const data = (await res.json().catch(() => null)) as ContactResponse | null;
-      if (res.ok && data?.ok) {
+      const data = await sendContact(payload, file);
+      if (data.ok) {
         setStatus("success");
         setValues({ ...empty });
         setFile(null);
         requestAnimationFrame(() => statusRef.current?.focus());
         return;
       }
-      const err = data && !data.ok ? data.error : "server";
-      if (data && !data.ok && data.fields) setErrors(data.fields as Errors);
+      const err = data.error;
+      if (data.fields) setErrors(data.fields as Errors);
       setServerError(err);
       setStatus("error");
     } catch {
