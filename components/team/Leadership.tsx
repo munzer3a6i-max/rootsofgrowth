@@ -3,7 +3,6 @@ import { t, type Locale } from "@/lib/i18n";
 import { leaders, team, type Leader } from "@/content/team";
 import { SectionHead } from "@/components/about/SectionHead";
 import { PhotoPlaceholder } from "./PhotoPlaceholder";
-import { SocialLinks } from "./SocialLinks";
 import { ScrollDots } from "./ScrollDots";
 
 /** Team · Leadership (Figma 41:2275 desktop / 42:2437 mobile — horizontal scroller). */
@@ -47,12 +46,9 @@ export function Leadership({ locale }: { locale: Locale }) {
                 className="aspect-[397/440] rounded-t-[999px] rounded-b-[24px]"
                 sizes="(min-width: 1440px) 397px, 30vw"
               />
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex flex-col gap-1">
-                  <h3 className="t-h3 font-medium text-ink">{t(l.name, locale)}</h3>
-                  <p className="t-body-m text-purple">{t(l.role, locale)}</p>
-                </div>
-                <SocialLinks person={l} locale={locale} size="lg" />
+              <div className="flex flex-col gap-1">
+                <h3 className="t-h3 font-medium text-ink">{t(l.name, locale)}</h3>
+                <p className="t-body-m text-purple">{t(l.role, locale)}</p>
               </div>
             </li>
           ))}

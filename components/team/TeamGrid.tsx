@@ -7,7 +7,6 @@ import { departments, members, team, type Department } from "@/content/team";
 import { SectionHead } from "@/components/about/SectionHead";
 import { buttonClasses } from "@/components/Button";
 import { PhotoPlaceholder } from "./PhotoPlaceholder";
-import { SocialLinks } from "./SocialLinks";
 
 /** Mobile shows this many cards until "Show more" is pressed (Figma 42:2471). */
 const MOBILE_INITIAL = 6;
@@ -92,9 +91,6 @@ export function TeamGrid({ locale }: { locale: Locale }) {
                       {t(m.name, locale)}
                     </h3>
                     <p className="t-body-s text-muted">{t(m.role, locale)}</p>
-                  </div>
-                  <div className="hidden lg:block">
-                    <SocialLinks person={m} locale={locale} size="sm" email={false} />
                   </div>
                 </div>
               </li>

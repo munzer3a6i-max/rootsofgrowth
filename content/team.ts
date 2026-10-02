@@ -1,6 +1,5 @@
 import type { L } from "@/lib/i18n";
 import type { IconName } from "@/components/Icon";
-import { contact } from "@/content/site";
 
 /**
  * Team page copy (Figma "Team — فريقنا" desktop 41:2163 / mobile 42:2375).
@@ -38,8 +37,6 @@ export type Person = {
   role: L;
   /** Photo path; omitted → branded placeholder. */
   photo?: string;
-  linkedin?: string;
-  email?: string;
 };
 
 export type Leader = Person;
@@ -49,8 +46,6 @@ const mohsen: Person = {
   name: { ar: "محسن الشيباني", en: "Mohsen Alshaibani" },
   role: { ar: "المدير التنفيذي", en: "Chief Executive Officer" },
   photo: "/images/portrait.jpg",
-  linkedin: contact.social.linkedin,
-  email: contact.email,
 };
 
 const mohammed: Person = {
@@ -193,10 +188,5 @@ export const team = {
       en: "We’re always looking for passionate talent in event organization, design and on-site operations.",
     } as L,
     button: { ar: "أرسل سيرتك الذاتية", en: "Send your CV" } as L,
-  },
-
-  a11y: {
-    linkedin: { ar: "لينكدإن", en: "LinkedIn" } as L,
-    email: { ar: "البريد الإلكتروني", en: "Email" } as L,
   },
 };
