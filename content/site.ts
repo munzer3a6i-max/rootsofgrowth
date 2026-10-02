@@ -13,8 +13,8 @@ export const contact = {
   } as L,
   mapQuery: "Riyadh, Saudi Arabia",
   social: {
-    linkedin: "https://www.linkedin.com/",
-    x: "https://x.com/",
+    linkedin: "https://www.linkedin.com/in/roots-of-growth-735ba8413/",
+    x: "https://x.com/rootsofgrowth8",
     instagram: "https://www.instagram.com/grootsof/",
   },
 };
