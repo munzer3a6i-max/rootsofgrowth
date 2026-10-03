@@ -76,6 +76,11 @@ export const members: Member[] = [
     role: { ar: "أخصائي التصوير", en: "Photography Specialist" },
     department: "media",
   },
+  {
+    name: { ar: "ريانة العبيد", en: "Rayanah Alobaid" },
+    role: { ar: "المبيعات", en: "Sales" },
+    department: "media",
+  },
 ];
 
 export const team = {
