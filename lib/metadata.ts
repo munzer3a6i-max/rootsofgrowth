@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { locales, type Locale } from "./i18n";
 
-export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/$/, "");
+/** Public address used for canonical URLs, hreflang and the sitemap. Override with NEXT_PUBLIC_SITE_URL. */
+export const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://rootsofgrowth.com.sa").replace(/\/$/, "");
 
 /** Per-page metadata with canonical + hreflang alternates for ar/en. */
 export function pageMetadata({
