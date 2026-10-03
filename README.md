@@ -47,6 +47,10 @@ Requires Node.js **20.9+** (22 recommended).
    | Start command    | `npm start`      |
 
    `next start` automatically listens on the `PORT` Hostinger provides.
+
+   `npm run build` uses webpack (`next build --webpack`), not Turbopack: Hostinger's build
+   sandbox refuses the socket-connected helper processes Turbopack uses for CSS, which fails with
+   `TurbopackInternalError … lenis.css … node process exited before we could connect to it`.
 4. Add the **environment variables** (same screen, or later in the website dashboard → *Environment variables*):
 
    | Variable               | Example / notes                                                     |
